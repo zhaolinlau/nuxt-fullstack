@@ -1,6 +1,7 @@
 <script setup>
 definePageMeta({
-	layout: 'guest'
+	layout: 'guest',
+	middleware: 'auth'
 })
 
 const user = useSupabaseUser()
@@ -8,8 +9,6 @@ const user = useSupabaseUser()
 watch(user, () => {
 	if (user.value) {
 		return navigateTo('/')
-	} else if (!user.value) {
-		return navigateTo('/login')
 	}
 }, { immediate: true })
 </script>
