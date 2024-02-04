@@ -21,27 +21,30 @@ async function resetPassword() {
 </script>
 
 <template>
-	<form class="box" @submit.prevent="resetPassword">
-		<div class="field">
-			<label for="email" class="label">Email</label>
-			<div class="control" id="email">
-				{{ user.email }}
-			</div>
-		</div>
+	<div class="columns is-centered">
+		<div class="column is-6-desktop is-12-touch">
+			<form class="box" @submit.prevent="resetPassword">
+				<div class="field">
+					<label for="email" class="label">Email</label>
+					<div class="control" id="email">
+						{{ user.email }}
+					</div>
+				</div>
 
-		<div class="field">
-			<label for="new_password" class="label">New Password</label>
-			<div class="control">
-				<input type="password" id="new_password" minlength="6" v-model="new_password" class="input" required>
-			</div>
-		</div>
+				<div class="field">
+					<label for="new_password" class="label">New Password</label>
+					<div class="control">
+						<input type="password" id="new_password" minlength="6" v-model="new_password" class="input" required>
+					</div>
+				</div>
 
-		<div class="field">
-			<div class="control">
-				<button class="button" type="submit">Reset</button>
-			</div>
+				<div class="field">
+					<div class="control buttons">
+						<button class="button is-primary is-fullwidth" type="submit">Reset</button>
+						<NuxtLink class="button is-link is-fullwidth" to="/login">Back to Login</NuxtLink>
+					</div>
+				</div>
+			</form>
 		</div>
-
-		<NuxtLink to="/login">Back to Login</NuxtLink>
-	</form>
+	</div>
 </template>
