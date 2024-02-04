@@ -1,21 +1,28 @@
 <script setup>
 definePageMeta({
-	layout: 'guest'
+	layout: 'guest',
+	middleware: 'guest'
 })
 
 const supabase = useSupabaseClient()
 const email = ref(null)
 const password = ref(null)
-const registerError = ref('')
+const registerError = ref(null)
+const registerSuccess = ref(null)
 
 async function register() {
 	const { data, error } = await supabase.auth.signUp({
 		email: email.value,
 		password: password.value,
+		options: {
+			emailRedirectTo: 'http://localhost:3000/confirm'
+		}
 	})
 	if (error) {
 		registerError.value = error.message
+		console.log(error)
 	} else {
+		registerSuccess.value = "Please check your email, we have sent a verification link."
 		email.value = null
 		password.value = null
 	}
@@ -23,36 +30,42 @@ async function register() {
 </script>
 
 <template>
-	<form class="box" @submit.prevent="register">
-		<article class="message is-danger" v-if="registerError != ''">
-			<div class="message-header">
-				<p>Error</p>
-				<button class="delete" aria-label="delete" @click="registerError = ''"></button>
-			</div>
-			<div class="message-body">
-				{{ registerError }}
-			</div>
-		</article>
-		<div class="field">
-			<label class="label" for="email">Email</label>
-			<div class="control">
-				<input type="email" id="email" class="input" v-model="email" required>
-			</div>
-		</div>
+	<div class="columns is-centered">
+		<div class="column is-6-desktop is-12-touch">
+			<form class="box" @submit.prevent="register">
 
-		<div class="field">
-			<label for="password" class="label">Password</label>
-			<div class="control">
-				<input type="password" id="password" v-model="password" class="input" required>
-			</div>
-		</div>
+				<div class="notification is-success is-light" v-if="registerSuccess">
+					<button class="delete" @click="registerSuccess = null"></button>
+					{{ registerSuccess }}
+				</div>
 
-		<div class="field">
-			<div class="control">
-				<button class="button" type="submit">Register</button>
-			</div>
-		</div>
+				<div class="notification is-danger is-light" v-if="registerError">
+					<button class="delete" @click="registerError = null"></button>
+					{{ registerError }}
+				</div>
 
-		<NuxtLink to="/login">Back to Login</NuxtLink>
-	</form>
+				<div class="field">
+					<label class="label" for="email">Email</label>
+					<div class="control">
+						<input type="email" id="email" class="input" v-model="email" required>
+					</div>
+				</div>
+
+				<div class="field">
+					<label for="password" class="label">Password</label>
+					<div class="control">
+						<input type="password" id="password" v-model="password" class="input" required>
+					</div>
+				</div>
+
+				<div class="field">
+					<div class="control buttons">
+						<button class="button is-primary is-fullwidth" type="submit">Register</button>
+						<NuxtLink class="button is-link is-fullwidth" to="/login">Back to Login</NuxtLink>
+					</div>
+				</div>
+
+			</form>
+		</div>
+	</div>
 </template>
