@@ -2,20 +2,15 @@
 definePageMeta({
 	middleware: 'auth'
 })
-
-const supabase = useSupabaseClient()
 const user = useSupabaseUser()
-async function logout() {
-	const { error } = await supabase.auth.signOut()
-	if (error) {
-		console.log(error)
-	} else {
-		return navigateTo('/login')
-	}
-}
 </script>
 
 <template>
-	Welcome {{ user.email }}
-	<button class="button" @click="logout">Logout</button>
+	<div class="hero is-fullheight-with-navbar">
+		<div class="hero-body">
+			<div class="container">
+				<p class="title has-text-centered">Welcome {{ user.email }}</p>
+			</div>
+		</div>
+	</div>
 </template>
