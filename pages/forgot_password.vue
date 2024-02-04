@@ -20,20 +20,23 @@ async function sendResetLink() {
 </script>
 
 <template>
-	<form class="box" @submit.prevent="sendResetLink">
-		<div class="field">
-			<label for="email" class="label">Email</label>
-			<div class="control">
-				<input type="email" id="email" v-model="email" class="input" required>
-			</div>
-		</div>
+	<div class="columns is-centered">
+		<div class="column is-6-desktop is-12-touch">
+			<form class="box" @submit.prevent="sendResetLink">
+				<div class="field">
+					<label for="email" class="label">Email</label>
+					<div class="control">
+						<input type="email" id="email" v-model="email" class="input" required>
+					</div>
+				</div>
 
-		<div class="field">
-			<div class="control">
-				<button class="button" type="submit">Send Reset Link</button>
-			</div>
+				<div class="field">
+					<div class="control buttons">
+						<button class="button is-primary is-fullwidth" type="submit">Send Reset Link</button>
+						<NuxtLink class="button is-link is-fullwidth" to="/login">Back to Login</NuxtLink>
+					</div>
+				</div>				
+			</form>
 		</div>
-
-		<NuxtLink to="/login">Back to Login</NuxtLink>
-	</form>
+	</div>
 </template>
