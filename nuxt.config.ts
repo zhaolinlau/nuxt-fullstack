@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 	devtools: { enabled: true },
+	ssr: false,
 	typescript: {
 		shim: false,
 	},
@@ -10,7 +11,7 @@ export default defineNuxtConfig({
 		redirectOptions: {
 			login: "/login",
 			callback: "/confirm",
-			exclude: ["/register"],
+			exclude: ["/register", "/forgot_password"],
 			cookieRedirect: false,
 		},
 	},
