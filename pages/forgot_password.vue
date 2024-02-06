@@ -13,7 +13,8 @@ const sendResetLink = async () => {
 	try {
 		loading.value = true
 		const { error } = await supabase.auth.resetPasswordForEmail(email.value, {
-			redirectTo: 'http://localhost:3000/reset_password'
+			// redirectTo: 'http://localhost:3000/reset_password'
+			redirectTo: 'https://nuxt-fullstack-two.vercel.app/reset_password'
 		})
 		if (error) throw error
 		sendSuccess.value = 'Please check your email, we have sent a reset link.'
