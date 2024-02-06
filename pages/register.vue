@@ -18,7 +18,7 @@ const register = async () => {
 			email: email.value,
 			password: password.value,
 			options: {
-				emailRedirectTo: 'http://localhost:3000/confirm' || 'https://nuxt-fullstack-two.vercel.app/confirm'
+				emailRedirectTo: 'http://localhost:3000/confirm'
 			}
 		})
 		if (error) throw error
