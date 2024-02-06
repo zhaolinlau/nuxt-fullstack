@@ -5,31 +5,29 @@ definePageMeta({
 
 const supabase = useSupabaseClient()
 const user = useSupabaseUser()
-const new_email = ref(null)
-const new_password = ref(null)
-const changeEmailError = ref(null)
-const changeEmailSuccess = ref(null)
-const changePasswordError = ref(null)
-const changePasswordSuccess = ref(null)
+const new_email = ref('')
+const new_password = ref('')
+const changeEmailError = ref('')
+const changeEmailSuccess = ref('')
+const changePasswordError = ref('')
+const changePasswordSuccess = ref('')
 
-async function changeEmail() {
-	const { data, error } = await supabase.auth.updateUser({
-		email: new_email.value,
-		options: {
-			emailRedirectTo: 'http://localhost:3000/confirm'
-		}
+const changeEmail = async () => {
+	const { error } = await supabase.auth.updateUser({
+		email: new_email.value
 	})
+
 	if (error) {
 		changeEmailError.value = error.message
 		console.log(error)
 	} else {
 		changeEmailSuccess.value = "Please check both of your email, we have sent a confirmation link."
-		new_email.value = null
+		new_email.value = ''
 	}
 }
 
 async function changePassword() {
-	const { data, error } = await supabase.auth.updateUser({
+	const { error } = await supabase.auth.updateUser({
 		password: new_password.value
 	})
 	if (error) {
@@ -37,7 +35,7 @@ async function changePassword() {
 		console.log(error)
 	} else {
 		changePasswordSuccess.value = "Your password has been updated."
-		new_password.value = null
+		new_password.value = ''
 	}
 }
 </script>
@@ -49,12 +47,12 @@ async function changePassword() {
 				<form class="box" @submit.prevent="changeEmail">
 
 					<div class="notification is-success is-light" v-if="changeEmailSuccess">
-						<button class="delete" @click="changeEmailSuccess = null"></button>
+						<button class="delete" @click="changeEmailSuccess = ''"></button>
 						{{ changeEmailSuccess }}
 					</div>
 
 					<div class="notification is-danger is-light" v-if="changeEmailError">
-						<button class="delete" @click="changeEmailError = null"></button>
+						<button class="delete" @click="changeEmailError = ''"></button>
 						{{ changeEmailError }}
 					</div>
 
@@ -82,12 +80,12 @@ async function changePassword() {
 				<form class="box" @submit.prevent="changePassword">
 
 					<div class="notification is-success is-light" v-if="changePasswordSuccess">
-						<button class="delete" @click="changePasswordSuccess = null"></button>
+						<button class="delete" @click="changePasswordSuccess = ''"></button>
 						{{ changePasswordSuccess }}
 					</div>
 
 					<div class="notification is-danger is-light" v-if="changePasswordError">
-						<button class="delete" @click="changePasswordError = null"></button>
+						<button class="delete" @click="changePasswordError = ''"></button>
 						{{ changePasswordError }}
 					</div>
 

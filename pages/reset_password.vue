@@ -6,12 +6,13 @@ definePageMeta({
 
 const supabase = useSupabaseClient()
 const user = useSupabaseUser()
-const new_password = ref(null)
+const new_password = ref('')
 
-async function resetPassword() {
-	const { data, error } = await supabase.auth.updateUser({
+const resetPassword = async () => {
+	const { error } = await supabase.auth.updateUser({
 		password: new_password.value
 	})
+
 	if (error) {
 		console.log(error)
 	} else {

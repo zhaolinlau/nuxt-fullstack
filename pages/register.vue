@@ -5,26 +5,27 @@ definePageMeta({
 })
 
 const supabase = useSupabaseClient()
-const email = ref(null)
-const password = ref(null)
-const registerError = ref(null)
-const registerSuccess = ref(null)
+const email = ref('')
+const password = ref('')
+const registerError = ref('')
+const registerSuccess = ref('')
 
-async function register() {
-	const { data, error } = await supabase.auth.signUp({
+const register = async () => {
+	const { error } = await supabase.auth.signUp({
 		email: email.value,
 		password: password.value,
 		options: {
-			emailRedirectTo: 'http://localhost:3000/confirm'
+			emailRedirectTo: 'http://localhost:3000/confirm' || 'https://nuxt-fullstack-two.vercel.app/confirm'
 		}
 	})
+
 	if (error) {
 		registerError.value = error.message
 		console.log(error)
 	} else {
 		registerSuccess.value = "Please check your email, we have sent a verification link."
-		email.value = null
-		password.value = null
+		email.value = ''
+		password.value = ''
 	}
 }
 </script>
@@ -35,12 +36,12 @@ async function register() {
 			<form class="box" @submit.prevent="register">
 
 				<div class="notification is-success is-light" v-if="registerSuccess">
-					<button class="delete" @click="registerSuccess = null"></button>
+					<button class="delete" @click="registerSuccess = ''"></button>
 					{{ registerSuccess }}
 				</div>
 
 				<div class="notification is-danger is-light" v-if="registerError">
-					<button class="delete" @click="registerError = null"></button>
+					<button class="delete" @click="registerError = ''"></button>
 					{{ registerError }}
 				</div>
 

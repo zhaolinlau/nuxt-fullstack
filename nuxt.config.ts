@@ -12,7 +12,6 @@ export default defineNuxtConfig({
 			login: "/login",
 			callback: "/confirm",
 			exclude: ["/register", "/forgot_password"],
-			cookieRedirect: false,
 		},
 	},
 });

@@ -4,17 +4,17 @@ definePageMeta({
 	middleware: 'guest'
 })
 const supabase = useSupabaseClient()
-const email = ref(null)
+const email = ref('')
 
-async function sendResetLink() {
-	const { data, error } = await supabase.auth.resetPasswordForEmail(email.value, {
-		redirectTo: 'http://localhost:3000/reset_password',
+const sendResetLink = async () => {
+	const { error } = await supabase.auth.resetPasswordForEmail(email.value, {
+		redirectTo: 'http://localhost:3000/reset_password' || 'https://nuxt-fullstack-two.vercel.app/reset_password'
 	})
 
 	if (error) {
 		console.log(error)
 	} else {
-		email.value = null
+		email.value = ''
 	}
 }
 </script>
@@ -35,7 +35,7 @@ async function sendResetLink() {
 						<button class="button is-primary is-fullwidth" type="submit">Send Reset Link</button>
 						<NuxtLink class="button is-link is-fullwidth" to="/login">Back to Login</NuxtLink>
 					</div>
-				</div>				
+				</div>
 			</form>
 		</div>
 	</div>

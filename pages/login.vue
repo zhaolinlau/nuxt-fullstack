@@ -9,8 +9,8 @@ const email = ref(null)
 const password = ref(null)
 const loginError = ref(null)
 
-async function login() {
-	const { data, error } = await supabase.auth.signInWithPassword({
+const login = async () => {
+	const { error } = await supabase.auth.signInWithPassword({
 		email: email.value,
 		password: password.value
 	})
