@@ -9,23 +9,27 @@ const email = ref('')
 const password = ref('')
 const registerError = ref('')
 const registerSuccess = ref('')
+const loading = ref(false)
 
 const register = async () => {
-	const { error } = await supabase.auth.signUp({
-		email: email.value,
-		password: password.value,
-		options: {
-			emailRedirectTo: 'http://localhost:3000/confirm' || 'https://nuxt-fullstack-two.vercel.app/confirm'
-		}
-	})
-
-	if (error) {
-		registerError.value = error.message
-		console.log(error)
-	} else {
+	try {
+		loading.value = true
+		const { error } = await supabase.auth.signUp({
+			email: email.value,
+			password: password.value,
+			options: {
+				emailRedirectTo: 'http://localhost:3000/confirm' || 'https://nuxt-fullstack-two.vercel.app/confirm'
+			}
+		})
+		if (error) throw error
 		registerSuccess.value = "Please check your email, we have sent a verification link."
 		email.value = ''
 		password.value = ''
+	} catch (error) {
+		registerError.value = error.message
+		console.log(error)
+	} finally {
+		loading.value = false
 	}
 }
 </script>
@@ -61,7 +65,8 @@ const register = async () => {
 
 				<div class="field">
 					<div class="control buttons">
-						<button class="button is-primary is-fullwidth" type="submit">Register</button>
+						<button class="button is-primary is-fullwidth" :class="{ 'is-loading': loading }"
+							type="submit">Register</button>
 						<NuxtLink class="button is-link is-fullwidth" to="/login">Back to Login</NuxtLink>
 					</div>
 				</div>

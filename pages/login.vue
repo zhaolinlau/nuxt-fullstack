@@ -8,18 +8,22 @@ const supabase = useSupabaseClient()
 const email = ref(null)
 const password = ref(null)
 const loginError = ref(null)
+const loading = ref(false)
 
 const login = async () => {
-	const { error } = await supabase.auth.signInWithPassword({
-		email: email.value,
-		password: password.value
-	})
-
-	if (error) {
+	try {
+		loading.value = true
+		const { error } = await supabase.auth.signInWithPassword({
+			email: email.value,
+			password: password.value
+		})
+		if (error) throw error
+		return navigateTo('/confirm')
+	} catch (error) {
 		loginError.value = error.message
 		console.log(error)
-	} else {
-		return navigateTo('/confirm')
+	} finally {
+		loading.value = false
 	}
 }
 </script>
@@ -56,7 +60,7 @@ const login = async () => {
 
 				<div class="field">
 					<div class="control buttons">
-						<button class="button is-primary is-fullwidth">Login</button>
+						<button class="button is-primary is-fullwidth" :class="{ 'is-loading': loading }" type="submit">Login</button>
 						<NuxtLink class="button is-link is-fullwidth" to="/register">Register an account</NuxtLink>
 					</div>
 				</div>

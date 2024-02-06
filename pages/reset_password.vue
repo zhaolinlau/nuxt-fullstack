@@ -1,22 +1,26 @@
 <script setup>
 definePageMeta({
 	layout: 'guest',
-	middleware: 'auth'
+	middleware: 'reset'
 })
 
 const supabase = useSupabaseClient()
 const user = useSupabaseUser()
 const new_password = ref('')
+const loading = ref(false)
 
 const resetPassword = async () => {
-	const { error } = await supabase.auth.updateUser({
-		password: new_password.value
-	})
-
-	if (error) {
-		console.log(error)
-	} else {
+	try {
+		loading.value = true
+		const { error } = await supabase.auth.updateUser({
+			password: new_password.value
+		})
+		if (error) throw error
 		return navigateTo('/login')
+	} catch (error) {
+		console.log(error)
+	} finally {
+		loading.value = false
 	}
 }
 </script>
@@ -41,7 +45,7 @@ const resetPassword = async () => {
 
 				<div class="field">
 					<div class="control buttons">
-						<button class="button is-primary is-fullwidth" type="submit">Reset</button>
+						<button class="button is-primary is-fullwidth" :class="{ 'is-active': loading }" type="submit">Reset</button>
 						<NuxtLink class="button is-link is-fullwidth" to="/login">Back to Login</NuxtLink>
 					</div>
 				</div>
