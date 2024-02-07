@@ -5,6 +5,11 @@ export default defineNuxtConfig({
 	typescript: {
 		shim: false,
 	},
+	runtimeConfig: {
+		public: {
+			siteURL: process.env.NUXT_PUBLIC_SITE_URL,
+		},
+	},
 	modules: ["@nuxtjs/supabase"],
 	css: ["bulma"],
 	supabase: {

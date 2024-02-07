@@ -10,6 +10,7 @@ const password = ref('')
 const registerError = ref('')
 const registerSuccess = ref('')
 const loading = ref(false)
+const runtimeConfig = useRuntimeConfig()
 
 const register = async () => {
 	try {
@@ -18,8 +19,7 @@ const register = async () => {
 			email: email.value,
 			password: password.value,
 			options: {
-				emailRedirectTo: `${process.env.SITE_URL}/confirm`
-				// emailRedirectTo: 'https://nuxt-fullstack-two.vercel.app/confirm'
+				emailRedirectTo: `${runtimeConfig.public.siteURL}/confirm`
 			},
 		})
 

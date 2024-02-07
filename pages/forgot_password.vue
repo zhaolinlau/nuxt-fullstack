@@ -8,13 +8,13 @@ const email = ref('')
 const loading = ref(false)
 const sendSuccess = ref('')
 const sendError = ref('')
+const runtimeConfig = useRuntimeConfig()
 
 const sendResetLink = async () => {
 	try {
 		loading.value = true
 		const { error } = await supabase.auth.resetPasswordForEmail(email.value, {
-			redirectTo: `${process.env.SITE_URL}/reset_password`
-			// redirectTo: 'https://nuxt-fullstack-two.vercel.app/reset_password'
+			redirectTo: `${runtimeConfig.public.siteURL}/reset_password`
 		})
 		if (error) throw error
 		sendSuccess.value = 'Please check your email, we have sent a reset link.'
