@@ -40,6 +40,7 @@ const register = async () => {
 		loading.value = false
 	}
 }
+console.log(runtimeConfig.public.siteURL)
 </script>
 
 <template>
