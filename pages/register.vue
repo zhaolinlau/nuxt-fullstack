@@ -18,7 +18,7 @@ const register = async () => {
 			email: email.value,
 			password: password.value,
 			options: {
-				emailRedirectTo: process.env.SITE_URL + '/confirm'
+				emailRedirectTo: `${process.env.SITE_URL}/confirm`
 				// emailRedirectTo: 'https://nuxt-fullstack-two.vercel.app/confirm'
 			},
 		})
