@@ -14,18 +14,25 @@ const loading = ref(false)
 const register = async () => {
 	try {
 		loading.value = true
-		const { error } = await supabase.auth.signUp({
+		const { data, error } = await supabase.auth.signUp({
 			email: email.value,
 			password: password.value,
 			options: {
-				// emailRedirectTo: 'http://localhost:3000/confirm'
-				emailRedirectTo: 'https://nuxt-fullstack-two.vercel.app/confirm'
-			}
+				emailRedirectTo: 'http://localhost:3000/confirm'
+				// emailRedirectTo: 'https://nuxt-fullstack-two.vercel.app/confirm'
+			},
 		})
-		if (error) throw error
-		registerSuccess.value = "Please check your email, we have sent a verification link."
-		email.value = ''
-		password.value = ''
+
+		if (error) {
+			throw error
+		}
+		else if (data.user.identities.length == 0) {
+			registerError.value = "User already registered."
+		} else {
+			registerSuccess.value = "Please check your email, we have sent a verification link."
+			email.value = ''
+			password.value = ''
+		}
 	} catch (error) {
 		registerError.value = error.message
 		console.log(error)
