@@ -23,7 +23,6 @@ const sendResetLink = async () => {
 	} catch (error) {
 		sendError.value = error.message
 		sendSuccess.value = ''
-		console.log(error)
 	} finally {
 		loading.value = false
 	}

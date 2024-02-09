@@ -32,7 +32,6 @@ async function changePassword() {
 	})
 	if (error) {
 		changePasswordError.value = error.message
-		console.log(error)
 	} else {
 		changePasswordSuccess.value = "Your password has been updated."
 		new_password.value = ''
