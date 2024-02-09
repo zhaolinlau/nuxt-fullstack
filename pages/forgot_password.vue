@@ -14,13 +14,15 @@ const sendResetLink = async () => {
 	try {
 		loading.value = true
 		const { error } = await supabase.auth.resetPasswordForEmail(email.value, {
-			redirectTo: `${runtimeConfig.public.siteURL}/reset_password`
+			redirectTo: `${runtimeConfig.public.siteURL}/confirm`
 		})
 		if (error) throw error
-		sendSuccess.value = 'Please check your email, we have sent a reset link.'
+		sendSuccess.value = 'We have sent a login link to your email, please click the link to login.'
 		email.value = ''
+		sendError.value = ''
 	} catch (error) {
 		sendError.value = error.message
+		sendSuccess.value = ''
 		console.log(error)
 	} finally {
 		loading.value = false
@@ -51,7 +53,7 @@ const sendResetLink = async () => {
 
 				<div class="field">
 					<div class="control buttons">
-						<button class="button is-primary is-fullwidth" :class="{ 'is-loading': loading }" type="submit">Send Reset
+						<button class="button is-primary is-fullwidth" :class="{ 'is-loading': loading }" type="submit">Send Login
 							Link</button>
 						<NuxtLink class="button is-link is-fullwidth" to="/login">Back to Login</NuxtLink>
 					</div>
