@@ -4,7 +4,7 @@ definePageMeta({
 	middleware: 'guest'
 })
 
-const supabase = useSupabaseClient()
+const client = useSupabaseClient()
 const email = ref('')
 const password = ref('')
 const registerError = ref('')
@@ -15,7 +15,7 @@ const runtimeConfig = useRuntimeConfig()
 const register = async () => {
 	try {
 		loading.value = true
-		const { data, error } = await supabase.auth.signUp({
+		const { data, error } = await client.auth.signUp({
 			email: email.value,
 			password: password.value,
 			options: {
@@ -35,7 +35,6 @@ const register = async () => {
 		}
 	} catch (error) {
 		registerError.value = error.message
-		console.log(error)
 	} finally {
 		loading.value = false
 	}

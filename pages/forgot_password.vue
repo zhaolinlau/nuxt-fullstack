@@ -3,7 +3,7 @@ definePageMeta({
 	layout: 'guest',
 	middleware: 'guest'
 })
-const supabase = useSupabaseClient()
+const client = useSupabaseClient()
 const email = ref('')
 const loading = ref(false)
 const sendSuccess = ref('')
@@ -13,7 +13,7 @@ const runtimeConfig = useRuntimeConfig()
 const sendResetLink = async () => {
 	try {
 		loading.value = true
-		const { error } = await supabase.auth.resetPasswordForEmail(email.value, {
+		const { error } = await client.auth.resetPasswordForEmail(email.value, {
 			redirectTo: `${runtimeConfig.public.siteURL}/confirm`
 		})
 		if (error) throw error

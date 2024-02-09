@@ -3,7 +3,7 @@ definePageMeta({
 	middleware: 'auth'
 })
 
-const supabase = useSupabaseClient()
+const client = useSupabaseClient()
 const user = useSupabaseUser()
 const new_email = ref('')
 const new_password = ref('')
@@ -13,7 +13,7 @@ const changePasswordError = ref('')
 const changePasswordSuccess = ref('')
 
 const changeEmail = async () => {
-	const { error } = await supabase.auth.updateUser({
+	const { error } = await client.auth.updateUser({
 		email: new_email.value
 	})
 
@@ -27,7 +27,7 @@ const changeEmail = async () => {
 }
 
 async function changePassword() {
-	const { error } = await supabase.auth.updateUser({
+	const { error } = await client.auth.updateUser({
 		password: new_password.value
 	})
 	if (error) {
