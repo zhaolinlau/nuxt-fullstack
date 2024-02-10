@@ -10,8 +10,8 @@ export default defineNuxtConfig({
 			siteURL: process.env.NUXT_PUBLIC_SITE_URL,
 		},
 	},
+	plugins: ["plugins/oruga"],
 	modules: ["@nuxtjs/supabase"],
-	css: ["bulma"],
 	supabase: {
 		redirectOptions: {
 			login: "/login",
