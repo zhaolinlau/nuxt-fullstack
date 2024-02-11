@@ -173,7 +173,6 @@ const confirmTask = async (task) => {
 									<button class="card-footer-item button is-danger" @click="deleteTask(task)">Remove</button>
 								</div>
 							</form>
-							<p class="subtitle" v-if="tasks.filter(task => !task.completed).length === 0">No ongoing task...</p>
 						</div>
 					</template>
 
@@ -199,9 +198,9 @@ const confirmTask = async (task) => {
 									<button class="card-footer-item button is-danger" @click="deleteTask(task)">Remove</button>
 								</div>
 							</div>
-							<p class="subtitle" v-if="tasks.filter(task => task.completed).length === 0">No ongoing task...</p>
 						</div>
 					</template>
+										
 					<div class="column is-12" v-else>
 						<p class="subtitle">
 							No completed task...
