@@ -17,7 +17,7 @@ async function logout() {
 	<nav class="navbar is-fixed-top has-shadow" role="navigation" aria-label="main navigation">
 		<div class="navbar-brand">
 			<NuxtLink class="navbar-item" to="/">
-				Nuxt Fullstack
+				To-Do List
 			</NuxtLink>
 
 			<a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" @click="showNav = !showNav">
