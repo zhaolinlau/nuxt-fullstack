@@ -13,6 +13,7 @@ const loading = ref(false)
 const title = ref('')
 const details = ref('')
 const showTaskForm = ref(false);
+const edit = ref(false);
 
 const addTask = async () => {
 	try {
@@ -47,7 +48,6 @@ const { data: tasks, refresh: refreshTasks } = useAsyncData('tasks', async () =>
 		.from("tasks")
 		.select("*")
 		.eq("user_id", user.value.id)
-		.eq('completed', false)
 		.order('created_at', { ascending: false })
 	return data
 })
@@ -80,6 +80,27 @@ const completeTask = async (task) => {
 		})
 		.eq("id", task.id)
 }
+
+const editTask = async (task) => {
+	task.editable = true
+}
+
+const confirmTask = async (task) => {
+	const { data, error } = await client
+		.from('tasks')
+		.update({
+			title: task.title,
+			details: task.details
+		})
+		.eq('id', task.id)
+		.select()
+
+	if (error) {
+		console.log(error)
+	} else {
+		edit.value = false
+	}
+}
 </script>
 
 <template>
@@ -107,7 +128,7 @@ const completeTask = async (task) => {
 								<div class="field">
 									<label class="label" for="details">Task Details</label>
 									<div class="control">
-										<textarea id="details" class="textarea" v-model="details" required></textarea>
+										<textarea id="details" class="textarea" v-model="details"></textarea>
 									</div>
 								</div>
 
@@ -115,7 +136,8 @@ const completeTask = async (task) => {
 									<div class="control buttons">
 										<button class="button is-primary is-fullwidth" :class="{ 'is-loading': loading }" type="submit">Add
 											Task</button>
-										<button class="button is-danger is-fullwidth" @click="showTaskForm = false">Close</button>
+										<button class="button is-danger is-fullwidth" type="button"
+											@click="showTaskForm = false">Close</button>
 									</div>
 								</div>
 							</form>
@@ -127,22 +149,63 @@ const completeTask = async (task) => {
 							{{ addSuccess }}
 						</div>
 					</div>
-					<div class="column is-12" v-for="task in tasks">
-						<div class="card">
-							<div class="card-header">
-								<div class="card-header-title">
-									{{ task.title }}
+					<div class="column is-12">
+						<p class="title">Ongoing</p>
+					</div>
+					<template v-if="tasks && tasks.length > 0">
+						<div class="column is-12" v-for="task in tasks">
+							<form class="card" @submit.prevent="updateTask(task)" v-if="!task.completed">
+								<div class="card-header">
+									<div class="card-header-title">
+										<input type="text" class="input" v-model="task.title" :class="{ 'is-static': !task.editable }"
+											required :readonly="!task.editable">
+									</div>
+								</div>
+								<div class="card-content" v-if="task.details">
+									<textarea class="textarea" v-model="task.details"
+										:class="{ 'is-static input has-fixed-size': !task.editable }" :readonly="!task.editable"></textarea>
+								</div>
+								<div class="card-footer">
+									<button class="card-footer-item button is-link"
+										@click="task.editable ? confirmTask(task) : editTask(task)">{{ task.editable ? 'Confirm' :
+											'Edit' }}</button>
+									<button class="card-footer-item button is-success" @click="completeTask(task)">Complete</button>
+									<button class="card-footer-item button is-danger" @click="deleteTask(task)">Remove</button>
+								</div>
+							</form>
+							<p class="subtitle" v-if="tasks.filter(task => !task.completed).length === 0">No ongoing task...</p>
+						</div>
+					</template>
+
+					<div class="column is-12" v-else>
+						<p class="subtitle">No ongoing task...</p>
+					</div>
+
+					<div class="column is-12">
+						<p class="title">Completed</p>
+					</div>
+					<template v-if="tasks && tasks.length > 0">
+						<div class="column is-12" v-for="task in tasks">
+							<div class="card" v-if="task.completed">
+								<div class="card-header">
+									<div class="card-header-title">
+										<input type="text" class="input is-static" v-model="task.title" required readonly>
+									</div>
+								</div>
+								<div class="card-content" v-if="task.details">
+									<textarea class="textarea is-static input has-fixed-size" v-model="task.details" readonly></textarea>
+								</div>
+								<div class="card-footer">
+									<button class="card-footer-item button is-danger" @click="deleteTask(task)">Remove</button>
 								</div>
 							</div>
-							<div class="card-content">
-								{{ task.details }}
-							</div>
-							<div class="card-footer">
-								<button class="card-footer-item button is-link">Edit</button>
-								<button class="card-footer-item button is-success" @click="completeTask(task)">Complete</button>
-								<button class="card-footer-item button is-danger" @click="deleteTask(task)">Remove</button>
-							</div>
+							<p class="subtitle" v-if="tasks.filter(task => task.completed).length === 0">No ongoing task...</p>
 						</div>
+					</template>
+					<div class="column is-12" v-else>
+						<p class="subtitle">
+							No completed task...
+						</p>
 					</div>
 				</div>
 			</div>
