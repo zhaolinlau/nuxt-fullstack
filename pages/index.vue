@@ -152,7 +152,7 @@ const confirmTask = async (task) => {
 					<div class="column is-12">
 						<p class="title">Ongoing</p>
 					</div>
-					<template v-if="tasks && tasks.length > 0">
+					<template v-if="tasks && tasks.length > 0 && tasks.some(task => !task.completed)">
 						<div class="column is-12" v-for="task in tasks">
 							<form class="card" @submit.prevent="updateTask(task)" v-if="!task.completed">
 								<div class="card-header">
@@ -183,7 +183,7 @@ const confirmTask = async (task) => {
 					<div class="column is-12">
 						<p class="title">Completed</p>
 					</div>
-					<template v-if="tasks && tasks.length > 0">
+					<template v-if="tasks && tasks.length > 0 && tasks.some(task => task.completed)">
 						<div class="column is-12" v-for="task in tasks">
 							<div class="card" v-if="task.completed">
 								<div class="card-header">
@@ -200,7 +200,7 @@ const confirmTask = async (task) => {
 							</div>
 						</div>
 					</template>
-										
+
 					<div class="column is-12" v-else>
 						<p class="subtitle">
 							No completed task...
