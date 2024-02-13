@@ -5,15 +5,15 @@ definePageMeta({
 
 import { RealtimeChannel } from '@supabase/supabase-js'
 let realtimeChannel = RealtimeChannel
-const client = useSupabaseClient();
-const user = useSupabaseUser();
+const client = useSupabaseClient()
+const user = useSupabaseUser()
 const addError = ref('')
 const addSuccess = ref('')
 const loading = ref(false)
 const title = ref('')
 const details = ref('')
-const showTaskForm = ref(false);
-const edit = ref(false);
+const showTaskForm = ref(false)
+const edit = ref(false)
 
 const addTask = async () => {
 	try {
@@ -43,7 +43,7 @@ const addTask = async () => {
 	}
 }
 
-const { data: tasks, refresh: refreshTasks } = useAsyncData('tasks', async () => {
+const { data: tasks, refresh: refreshTasks, pending } = useAsyncData('tasks', async () => {
 	const { data } = await client
 		.from("tasks")
 		.select("*")
@@ -152,60 +152,69 @@ const confirmTask = async (task) => {
 					<div class="column is-12">
 						<p class="title">Ongoing</p>
 					</div>
-					<template v-if="tasks && tasks.length > 0 && tasks.some(task => !task.completed)">
-						<div class="column is-12" v-for="task in tasks">
-							<form class="card" @submit.prevent="updateTask(task)" v-if="!task.completed">
-								<div class="card-header">
-									<div class="card-header-title">
-										<input type="text" class="input" v-model="task.title" :class="{ 'is-static': !task.editable }"
-											required :readonly="!task.editable">
+					<div class="column is-12" v-if="pending">
+						Loading...
+					</div>
+					<template v-else>
+						<template v-if="tasks.length > 0 && tasks.some(task => !task.completed)">
+							<div class="column is-12" v-for="task in tasks">
+								<form class="card" @submit.prevent="updateTask(task)">
+									<div class="card-header">
+										<div class="card-header-title">
+											<input type="text" class="input" v-model="task.title" :class="{ 'is-static': !task.editable }"
+												required :readonly="!task.editable">
+										</div>
 									</div>
-								</div>
-								<div class="card-content" v-if="task.details">
-									<textarea class="textarea" v-model="task.details"
-										:class="{ 'is-static input has-fixed-size': !task.editable }" :readonly="!task.editable"></textarea>
-								</div>
-								<div class="card-footer">
-									<button class="card-footer-item button is-link"
-										@click="task.editable ? confirmTask(task) : editTask(task)">{{ task.editable ? 'Confirm' :
-											'Edit' }}</button>
-									<button class="card-footer-item button is-success" @click="completeTask(task)">Complete</button>
-									<button class="card-footer-item button is-danger" @click="deleteTask(task)">Remove</button>
-								</div>
-							</form>
+									<div class="card-content" v-if="task.details">
+										<textarea class="textarea" v-model="task.details"
+											:class="{ 'is-static input has-fixed-size': !task.editable }" :readonly="!task.editable"></textarea>
+									</div>
+									<div class="card-footer">
+										<button class="card-footer-item button is-link"
+											@click="task.editable ? confirmTask(task) : editTask(task)">{{ task.editable ? 'Confirm' :
+												'Edit' }}</button>
+										<button class="card-footer-item button is-success" @click="completeTask(task)">Complete</button>
+										<button class="card-footer-item button is-danger" @click="deleteTask(task)">Remove</button>
+									</div>
+								</form>
+							</div>
+						</template>
+						<div class="column is-12" v-else>
+							<p class="subtitle">No ongoing task...</p>
 						</div>
 					</template>
-
-					<div class="column is-12" v-else>
-						<p class="subtitle">No ongoing task...</p>
-					</div>
 
 					<div class="column is-12">
 						<p class="title">Completed</p>
 					</div>
-					<template v-if="tasks && tasks.length > 0 && tasks.some(task => task.completed)">
-						<div class="column is-12" v-for="task in tasks">
-							<div class="card" v-if="task.completed">
-								<div class="card-header">
-									<div class="card-header-title">
-										<input type="text" class="input is-static" v-model="task.title" required readonly>
+					<div class="column is-12" v-if="pending">
+						Loading...
+					</div>
+					<template v-else>
+						<template v-if="tasks.length > 0 && tasks.some(task => task.completed)">
+							<div class="column is-12" v-for="task in tasks">
+								<div class="card">
+									<div class="card-header">
+										<div class="card-header-title">
+											<input type="text" class="input is-static" v-model="task.title" required readonly>
+										</div>
+									</div>
+									<div class="card-content" v-if="task.details">
+										<textarea class="textarea is-static input has-fixed-size" v-model="task.details" readonly></textarea>
+									</div>
+									<div class="card-footer">
+										<button class="card-footer-item button is-danger" @click="deleteTask(task)">Remove</button>
 									</div>
 								</div>
-								<div class="card-content" v-if="task.details">
-									<textarea class="textarea is-static input has-fixed-size" v-model="task.details" readonly></textarea>
-								</div>
-								<div class="card-footer">
-									<button class="card-footer-item button is-danger" @click="deleteTask(task)">Remove</button>
-								</div>
 							</div>
+						</template>
+
+						<div class="column is-12" v-else>
+							<p class="subtitle">
+								No completed task...
+							</p>
 						</div>
 					</template>
-
-					<div class="column is-12" v-else>
-						<p class="subtitle">
-							No completed task...
-						</p>
-					</div>
 				</div>
 			</div>
 		</div>

@@ -26,7 +26,7 @@ const changeEmail = async () => {
 	}
 }
 
-async function changePassword() {
+const changePassword = async () => {
 	const { error } = await client.auth.updateUser({
 		password: new_password.value
 	})
