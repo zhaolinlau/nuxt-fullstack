@@ -2,7 +2,7 @@
 definePageMeta({
 	middleware: 'auth'
 })
-
+const loggingOut = ref(false)
 const client = useSupabaseClient()
 const user = useSupabaseUser()
 const new_email = ref('')
@@ -46,9 +46,33 @@ const changePassword = async () => {
 		new_password.value = ''
 	}
 }
+
+const deleteAccount = async () => {
+	loggingOut.value = true
+	await $fetch('/api/account', {
+		method: 'delete',
+		body: {
+			userId: user.value.id
+		}
+	})
+
+	try {
+		const { error } = await client.auth.signOut()
+		if (error) {
+			throw error
+		} else {
+			return navigateTo('/login')
+		}
+	} catch (error) {
+		showError(error.message)
+	} finally {
+		loggingOut.value = false
+	}
+}
 </script>
 
 <template>
+	<o-loading v-model:active="loggingOut" iconSize="large" label="Logging out..." />
 	<div class="columns">
 		<div class="column is-12">
 			<form class="box" @submit.prevent="changeEmail">
@@ -90,6 +114,12 @@ const changePassword = async () => {
 
 				<o-field>
 					<o-button type="submit" label="Change Password" />
+				</o-field>
+			</form>
+
+			<form class="box" @submit.prevent="deleteAccount">
+				<o-field label="Account Deletion">
+					<o-button variant="danger" label="Delete Account" nativeType="submit" />
 				</o-field>
 			</form>
 		</div>
