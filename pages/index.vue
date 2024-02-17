@@ -136,8 +136,8 @@ const confirmTask = async (task) => {
 			<p class="title">Incomplete</p>
 		</div>
 		<div class="column is-12" v-if="pending">
-			<o-skeleton width="25%" count="2" />
-			<o-skeleton width="75%" count="3" />
+			<o-skeleton width="25%" :count="2" />
+			<o-skeleton width="75%" :count="3" />
 		</div>
 		<template v-else>
 			<template v-if="tasks.some((task) => !task.completed)">
@@ -171,8 +171,8 @@ const confirmTask = async (task) => {
 			<p class="title">Completed</p>
 		</div>
 		<div class="column is-12" v-if="pending">
-			<o-skeleton width="25%" count="2" />
-			<o-skeleton width="75%" count="3" />
+			<o-skeleton width="25%" :count="2" />
+			<o-skeleton width="75%" :count="3" />
 		</div>
 		<template v-else>
 			<template v-if="tasks.some((task) => task.completed)">
