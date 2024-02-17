@@ -48,9 +48,9 @@ const sendOTPLink = async () => {
 					One-time Password (OTP)
 				</p>
 				
-				<o-notification variant="success" class="is-light" :message="sendSuccess" v-if="sendSuccess" closeable />
+				<o-notification variant="success" class="is-light" :message="sendSuccess" v-if="sendSuccess" closable />
 
-				<o-notification variant="danger" class="is-light" :message="sendError" v-if="sendError" closeable />
+				<o-notification variant="danger" class="is-light" :message="sendError" v-if="sendError" closable />
 
 				<o-field label="Email">
 					<o-input icon="email" v-model="email" type="email" required />

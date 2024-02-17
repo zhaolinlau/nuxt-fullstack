@@ -55,9 +55,9 @@ const register = async () => {
 					Create account
 				</p>
 
-				<o-notification variant="success" class="is-light" :message="registerSuccess" v-if="registerSuccess" closeable />
+				<o-notification variant="success" class="is-light" :message="registerSuccess" v-if="registerSuccess" closable />
 
-				<o-notification variant="danger" class="is-light" :message="registerError" v-if="registerError" closeable />
+				<o-notification variant="danger" class="is-light" :message="registerError" v-if="registerError" closable />
 
 				<o-field label="Email">
 					<o-input icon="email" v-model="email" type="email" required />

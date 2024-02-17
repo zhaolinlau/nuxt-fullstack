@@ -78,10 +78,10 @@ const deleteAccount = async () => {
 			<form class="box" @submit.prevent="changeEmail">
 
 				<o-notification variant="success" class="is-light" v-if="changeEmailSuccess" :message="changeEmailSuccess"
-					closeable />
+					closable />
 
 				<o-notification variant="success" class="is-light" v-if="changeEmailError" :message="changeEmailError"
-					closeable />
+					closable />
 
 				<o-field label="Current Email">
 					{{ user.email }}
