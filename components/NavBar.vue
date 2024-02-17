@@ -1,5 +1,5 @@
 <script setup>
-const supabase = useSupabaseClient()
+const client = useSupabaseClient()
 const user = useSupabaseUser()
 const showNav = ref(false)
 const loggingOut = ref(false)
@@ -7,7 +7,7 @@ const loggingOut = ref(false)
 const logout = async () => {
 	try {
 		loggingOut.value = true
-		const { error } = await supabase.auth.signOut()
+		const { error } = await client.auth.signOut()
 		if (error) {
 			throw error
 		}
