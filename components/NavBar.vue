@@ -45,7 +45,7 @@ const logout = async () => {
 						{{ user.email }}
 					</a>
 
-					<div class="navbar-dropdown is-right">
+					<div class="navbar-dropdown is-right is-boxed">
 						<NuxtLink class="navbar-item" to="/profile">
 							My Profile
 						</NuxtLink>
