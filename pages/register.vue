@@ -25,8 +25,7 @@ const register = async () => {
 
 		if (error) {
 			throw error
-		}
-		else if (data.user.identities.length == 0) {
+		} else if (data.user.identities.length == 0) {
 			registerError.value = 'User already registered.'
 			registerSuccess.value = ''
 		} else {
@@ -43,7 +42,7 @@ const register = async () => {
 		setTimeout(() => {
 			registerSuccess.value = ''
 			registerError.value = ''
-		})
+		}, 3000);
 	}
 }
 </script>
