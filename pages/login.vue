@@ -8,11 +8,11 @@ const client = useSupabaseClient()
 const email = ref(null)
 const password = ref(null)
 const loginError = ref(null)
-const loading = ref(false)
+const loggingIn = ref(false)
 
 const login = async () => {
 	try {
-		loading.value = true
+		loggingIn.value = true
 		const { error } = await client.auth.signInWithPassword({
 			email: email.value,
 			password: password.value
@@ -22,7 +22,10 @@ const login = async () => {
 	} catch (error) {
 		loginError.value = error.message
 	} finally {
-		loading.value = false
+		loggingIn.value = false
+		setTimeout(() => {
+			loginError.value = ''
+		}, 3000)
 	}
 }
 </script>
@@ -31,38 +34,31 @@ const login = async () => {
 	<div class="columns is-centered">
 		<div class="column is-6-desktop is-12-touch">
 			<form class="box" @submit.prevent="login">
+				<p class="title has-text-centered">
+					Login
+				</p>
 
-				<div class="notification is-danger is-light" v-if="loginError">
-					<button class="delete" @click="loginError = null"></button>
-					{{ loginError }}
-				</div>
+				<o-notification :message="loginError" variant="danger" class="is-light" v-if="loginError" closable />
 
-				<div class="field">
-					<label class="label" for="email">Email</label>
-					<div class="control">
-						<input type="email" id="email" class="input" v-model="email" required>
-					</div>
-				</div>
+				<o-field label="Email">
+					<o-input icon="email" type="email" v-model="email" required />
+				</o-field>
 
-				<div class="field">
-					<label for="password" class="label">Password</label>
-					<div class="control">
-						<input type="password" id="password" v-model="password" minlength="6" class="input" required>
-					</div>
-				</div>
+				<o-field label="Password">
+					<o-input icon="lock" type="password" minlength="6" passwordReveal v-model="password" required />
+				</o-field>
 
-				<div class="field has-text-right">
-					<div class="control">
-						<NuxtLink to="/forgot_password">Forgot password?</NuxtLink>
-					</div>
-				</div>
+				<o-field class="has-text-right">
+					<NuxtLink to="/forgot_password">Forgot password?</NuxtLink>
+				</o-field>
 
-				<div class="field">
-					<div class="control buttons">
-						<button class="button is-primary is-fullwidth" :class="{ 'is-loading': loading }" type="submit">Login</button>
-						<NuxtLink class="button is-link is-fullwidth" to="/register">Register an account</NuxtLink>
-					</div>
-				</div>
+				<o-field>
+					<o-button rounded variant="primary" expanded :loading="loggingIn" label="Login" nativeType="submit" />
+				</o-field>
+
+				<o-field>
+					<o-button rounded variant="link" expanded @click="navigateTo('/register')" label="Create account" />
+				</o-field>
 			</form>
 		</div>
 	</div>

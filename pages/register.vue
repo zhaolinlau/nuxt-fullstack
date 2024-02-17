@@ -9,12 +9,12 @@ const email = ref('')
 const password = ref('')
 const registerError = ref('')
 const registerSuccess = ref('')
-const loading = ref(false)
+const registering = ref(false)
 const runtimeConfig = useRuntimeConfig()
 
 const register = async () => {
 	try {
-		loading.value = true
+		registering.value = true
 		const { data, error } = await client.auth.signUp({
 			email: email.value,
 			password: password.value,
@@ -27,16 +27,23 @@ const register = async () => {
 			throw error
 		}
 		else if (data.user.identities.length == 0) {
-			registerError.value = "User already registered."
+			registerError.value = 'User already registered.'
+			registerSuccess.value = ''
 		} else {
 			registerSuccess.value = "Please check your email, we have sent a verification link."
 			email.value = ''
 			password.value = ''
+			registerError.value = ''
 		}
 	} catch (error) {
 		registerError.value = error.message
+		registerSuccess.value = ''
 	} finally {
-		loading.value = false
+		registering.value = false
+		setTimeout(() => {
+			registerSuccess.value = ''
+			registerError.value = ''
+		})
 	}
 }
 </script>
@@ -45,39 +52,29 @@ const register = async () => {
 	<div class="columns is-centered">
 		<div class="column is-6-desktop is-12-touch">
 			<form class="box" @submit.prevent="register">
+				<p class="title has-text-centered">
+					Create account
+				</p>
 
-				<div class="notification is-success is-light" v-if="registerSuccess">
-					<button class="delete" @click="registerSuccess = ''"></button>
-					{{ registerSuccess }}
-				</div>
+				<o-notification variant="success" class="is-light" :message="registerSuccess" v-if="registerSuccess" closeable />
 
-				<div class="notification is-danger is-light" v-if="registerError">
-					<button class="delete" @click="registerError = ''"></button>
-					{{ registerError }}
-				</div>
+				<o-notification variant="danger" class="is-light" :message="registerError" v-if="registerError" closeable />
 
-				<div class="field">
-					<label class="label" for="email">Email</label>
-					<div class="control">
-						<input type="email" id="email" class="input" v-model="email" required>
-					</div>
-				</div>
+				<o-field label="Email">
+					<o-input icon="email" v-model="email" type="email" required />
+				</o-field>
 
-				<div class="field">
-					<label for="password" class="label">Password</label>
-					<div class="control">
-						<input type="password" id="password" v-model="password" class="input" required>
-					</div>
-				</div>
+				<o-field label="Password">
+					<o-input icon="lock" passwordReveal v-model="password" minlength="6" required />
+				</o-field>
 
-				<div class="field">
-					<div class="control buttons">
-						<button class="button is-primary is-fullwidth" :class="{ 'is-loading': loading }"
-							type="submit">Register</button>
-						<NuxtLink class="button is-link is-fullwidth" to="/login">Back to Login</NuxtLink>
-					</div>
-				</div>
+				<o-field>
+					<o-button variant="primary" rounded expanded :loading="registering" label="Register" nativeType="submit" />
+				</o-field>
 
+				<o-field>
+					<o-button variant="link" rounded expanded @click="navigateTo('/login')" label="Back to login" />
+				</o-field>
 			</form>
 		</div>
 	</div>

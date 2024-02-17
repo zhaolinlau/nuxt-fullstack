@@ -2,18 +2,28 @@
 const supabase = useSupabaseClient()
 const user = useSupabaseUser()
 const showNav = ref(false)
+const loggingOut = ref(false)
 
 const logout = async () => {
-	const { error } = await supabase.auth.signOut()
-	if (error) {
-		console.log(error)
-	} else {
-		return navigateTo('/login')
+	try {
+		loggingOut.value = true
+		const { error } = await supabase.auth.signOut()
+		if (error) {
+			throw error
+		}
+		else {
+			return navigateTo('/login')
+		}
+	} catch (error) {
+		return showError(error.message)
+	} finally {
+		loggingOut.value = false
 	}
 }
 </script>
 
 <template>
+	<o-loading v-model:active="loggingOut" iconSize="large" label="Logging out..." />
 	<nav class="navbar is-fixed-top has-shadow" role="navigation" aria-label="main navigation">
 		<div class="navbar-brand">
 			<NuxtLink class="navbar-item" to="/">

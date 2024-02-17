@@ -5,26 +5,37 @@ definePageMeta({
 })
 const client = useSupabaseClient()
 const email = ref('')
-const loading = ref(false)
+const sending = ref(false)
 const sendSuccess = ref('')
 const sendError = ref('')
 const runtimeConfig = useRuntimeConfig()
 
-const sendResetLink = async () => {
+const sendOTPLink = async () => {
 	try {
-		loading.value = true
-		const { error } = await client.auth.resetPasswordForEmail(email.value, {
-			redirectTo: `${runtimeConfig.public.siteURL}/confirm`
+		sending.value = true
+		const { data, error } = await client.auth.signInWithOtp({
+			email: email.value,
+			options: {
+				shouldCreateUser: false,
+				emailRedirectTo: `${runtimeConfig.public.siteURL}/confirm`
+			}
 		})
-		if (error) throw error
-		sendSuccess.value = 'We have sent a login link to your email, please click the link to login.'
-		email.value = ''
-		sendError.value = ''
+		if (error) {
+			throw error
+		} else {
+			sendSuccess.value = "We've sent a link to your email, please click the link to login."
+			email.value = ''
+			sendError.value = ''
+		}
 	} catch (error) {
 		sendError.value = error.message
 		sendSuccess.value = ''
 	} finally {
-		loading.value = false
+		sending.value = false
+		setTimeout(() => {
+			sendError.value = ''
+			sendSuccess.value = ''
+		}, 3000);
 	}
 }
 </script>
@@ -32,31 +43,26 @@ const sendResetLink = async () => {
 <template>
 	<div class="columns is-centered">
 		<div class="column is-6-desktop is-12-touch">
-			<form class="box" @submit.prevent="sendResetLink">
-				<div class="notification is-success is-light" v-if="sendSuccess">
-					<button class="delete" @click="sendSuccess = ''"></button>
-					{{ sendSuccess }}
-				</div>
+			<form class="box" @submit.prevent="sendOTPLink">
+				<p class="title has-text-centered">
+					One-time Password (OTP)
+				</p>
+				
+				<o-notification variant="success" class="is-light" :message="sendSuccess" v-if="sendSuccess" closeable />
 
-				<div class="notification is-danger is-light" v-if="sendError">
-					<button class="delete" @click="sendError = ''"></button>
-					{{ sendError }}
-				</div>
+				<o-notification variant="danger" class="is-light" :message="sendError" v-if="sendError" closeable />
 
-				<div class="field">
-					<label for="email" class="label">Email</label>
-					<div class="control">
-						<input type="email" id="email" v-model="email" class="input" required>
-					</div>
-				</div>
+				<o-field label="Email">
+					<o-input icon="email" v-model="email" type="email" required />
+				</o-field>
 
-				<div class="field">
-					<div class="control buttons">
-						<button class="button is-primary is-fullwidth" :class="{ 'is-loading': loading }" type="submit">Send Login
-							Link</button>
-						<NuxtLink class="button is-link is-fullwidth" to="/login">Back to Login</NuxtLink>
-					</div>
-				</div>
+				<o-field>
+					<o-button rounded variant="primary" expanded :loading="sending" nativeType="submit" label="Send" />
+				</o-field>
+
+				<o-field>
+					<o-button rounded variant="link" expanded @click="navigateTo('/login')" label="Back to login" />
+				</o-field>
 			</form>
 		</div>
 	</div>

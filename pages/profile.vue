@@ -13,16 +13,25 @@ const changePasswordError = ref('')
 const changePasswordSuccess = ref('')
 
 const changeEmail = async () => {
-	const { error } = await client.auth.updateUser({
-		email: new_email.value
-	})
-
-	if (error) {
+	try {
+		const { error } = await client.auth.updateUser({
+			email: new_email.value
+		})
+		if (error) {
+			throw error
+		} else {
+			changeEmailSuccess.value = "Please check your email, we have sent a confirmation link."
+			new_email.value = ''
+			changeEmailError.value = ''
+		}
+	} catch (error) {
 		changeEmailError.value = error.message
-		console.log(error)
-	} else {
-		changeEmailSuccess.value = "Please check both of your email, we have sent a confirmation link."
-		new_email.value = ''
+		changeEmailSuccess.value = ''
+	} finally {
+		setTimeout(() => {
+			changeEmailSuccess.value = ''
+			changeEmailError.value = ''
+		}, 3000);
 	}
 }
 
@@ -40,68 +49,49 @@ const changePassword = async () => {
 </script>
 
 <template>
-	<div class="hero mt-6">
-		<div class="hero-body">
-			<div class="container">
-				<form class="box" @submit.prevent="changeEmail">
+	<div class="columns">
+		<div class="column is-12">
+			<form class="box" @submit.prevent="changeEmail">
 
-					<div class="notification is-success is-light" v-if="changeEmailSuccess">
-						<button class="delete" @click="changeEmailSuccess = ''"></button>
-						{{ changeEmailSuccess }}
-					</div>
+				<o-notification variant="success" class="is-light" v-if="changeEmailSuccess" :message="changeEmailSuccess"
+					closeable />
 
-					<div class="notification is-danger is-light" v-if="changeEmailError">
-						<button class="delete" @click="changeEmailError = ''"></button>
-						{{ changeEmailError }}
-					</div>
+				<o-notification variant="success" class="is-light" v-if="changeEmailError" :message="changeEmailError"
+					closeable />
 
-					<div class="field">
-						<label class="label" for="email">Current Email</label>
-						<div class="control" id="email">
-							{{ user.email }}
-						</div>
-					</div>
+				<o-field label="Current Email">
+					{{ user.email }}
+				</o-field>
 
-					<div class="field">
-						<label class="label" for="new_email">New Email</label>
-						<div class="control">
-							<input type="email" id="new_email" class="input" v-model="new_email" required>
-						</div>
-					</div>
+				<o-field label="New Email">
+					<o-input icon="email" type="email" v-model="new_email" required />
+				</o-field>
 
-					<div class="field">
-						<div class="control">
-							<button class="button" type="submit">Change Email</button>
-						</div>
-					</div>
-				</form>
+				<o-field>
+					<o-button nativeType="submit" label="Change Email" />
+				</o-field>
+			</form>
 
-				<form class="box" @submit.prevent="changePassword">
+			<form class="box" @submit.prevent="changePassword">
 
-					<div class="notification is-success is-light" v-if="changePasswordSuccess">
-						<button class="delete" @click="changePasswordSuccess = ''"></button>
-						{{ changePasswordSuccess }}
-					</div>
+				<div class="notification is-success is-light" v-if="changePasswordSuccess">
+					<button class="delete" @click="changePasswordSuccess = ''"></button>
+					{{ changePasswordSuccess }}
+				</div>
 
-					<div class="notification is-danger is-light" v-if="changePasswordError">
-						<button class="delete" @click="changePasswordError = ''"></button>
-						{{ changePasswordError }}
-					</div>
+				<div class="notification is-danger is-light" v-if="changePasswordError">
+					<button class="delete" @click="changePasswordError = ''"></button>
+					{{ changePasswordError }}
+				</div>
 
-					<div class="field">
-						<label for="password" class="label">New Password</label>
-						<div class="control">
-							<input type="password" id="password" minlength="6" v-model="new_password" class="input" required>
-						</div>
-					</div>
+				<o-field label="New Password">
+					<o-input icon="lock" type="password" passwordReveal minlength="6" v-model="new_password" required />
+				</o-field>
 
-					<div class="field">
-						<div class="control">
-							<button class="button" type="submit">Change Password</button>
-						</div>
-					</div>
-				</form>
-			</div>
+				<o-field>
+					<o-button type="submit" label="Change Password" />
+				</o-field>
+			</form>
 		</div>
 	</div>
 </template>

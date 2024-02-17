@@ -15,6 +15,6 @@ watch(user, () => {
 
 <template>
 	<p class="has-text-centered title">
-		Waiting for login...
+		Logging in. . .
 	</p>
 </template>
