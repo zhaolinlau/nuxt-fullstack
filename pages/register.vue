@@ -65,7 +65,7 @@ const register = async () => {
 				</o-field>
 
 				<o-field label="Password">
-					<o-input icon="lock" passwordReveal v-model="password" minlength="6" required />
+					<o-input icon="lock" passwordReveal type="password" v-model="password" minlength="6" required />
 				</o-field>
 
 				<o-field>
