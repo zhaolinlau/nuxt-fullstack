@@ -9,7 +9,7 @@ const client = useSupabaseClient()
 const user = useSupabaseUser()
 const addError = ref('')
 const addSuccess = ref('')
-const loading = ref(false)
+const addLoading = ref(false)
 const title = ref('')
 const details = ref('')
 const showTaskForm = ref(false)
@@ -17,7 +17,7 @@ const edit = ref(false)
 
 const addTask = async () => {
 	try {
-		loading.value = true
+		addLoading.value = true
 		const { error } = await client
 			.from("tasks")
 			.insert({
@@ -35,7 +35,7 @@ const addTask = async () => {
 		addError.value = error.message
 		addSuccess.value = ''
 	} finally {
-		loading.value = false
+		addLoading.value = false
 		setTimeout(() => {
 			addSuccess.value = ''
 			addError.value = ''
@@ -86,7 +86,7 @@ const editTask = async (task) => {
 }
 
 const confirmTask = async (task) => {
-	const { data, error } = await client
+	const { error } = await client
 		.from('tasks')
 		.update({
 			title: task.title,
@@ -118,63 +118,51 @@ const confirmTask = async (task) => {
 									{{ addError }}
 								</div>
 
-								<div class="field">
-									<label class="label" for="title">Task Title</label>
-									<div class="control">
-										<input type="text" id="title" class="input" v-model="title" required>
-									</div>
-								</div>
+								<o-field label="Task Title">
+									<o-input v-model="title" required />
+								</o-field>
 
-								<div class="field">
-									<label class="label" for="details">Task Details</label>
-									<div class="control">
-										<textarea id="details" class="textarea" v-model="details"></textarea>
-									</div>
-								</div>
+								<o-field label="Task Details">
+									<o-input v-model="details" type="textarea" required />
+								</o-field>
 
-								<div class="field">
-									<div class="control buttons">
-										<button class="button is-primary is-fullwidth" :class="{ 'is-loading': loading }" type="submit">Add
-											Task</button>
-										<button class="button is-danger is-fullwidth" type="button"
-											@click="showTaskForm = false">Close</button>
-									</div>
-								</div>
+								<o-field>
+									<o-button expanded label="Add Task" variant="primary" :loading="addLoading" nativeType="submit" />
+									<o-button variant="danger" expanded label="Close" @click="showTaskForm = false" />
+								</o-field>
 							</form>
 						</o-modal>
 					</div>
 					<div class="column is-12" v-if="addSuccess">
-						<div class="notification is-success is-light">
-							<button class="delete" @click="addSuccess = ''"></button>
-							{{ addSuccess }}
-						</div>
+						<o-notification variant="success" class="is-light" :message="addSuccess" closable />
 					</div>
 					<div class="column is-12">
 						<p class="title">Ongoing</p>
 					</div>
 					<div class="column is-12" v-if="pending">
-						Loading...
+						<o-skeleton width="25%" count="2" />
+						<o-skeleton width="75%" count="3" />
 					</div>
 					<template v-else>
 						<template v-if="tasks.some((task) => !task.completed)">
-							<div class="column is-12" v-for="task in tasks.filter((task) => !task.completed)">
+							<div class="column is-12" v-for=" task  in  tasks.filter((task) => !task.completed) ">
 								<form class="card" @submit.prevent="updateTask(task)">
 									<div class="card-header">
 										<div class="card-header-title">
-											<input type="text" class="input" v-model="task.title" :class="{ 'is-static': !task.editable }"
-												required :readonly="!task.editable">
+											<o-input v-model="task.title" :class="{ 'is-static': !task.editable }" required
+												:readonly="!task.editable" />
 										</div>
 									</div>
 									<div class="card-content" v-if="task.details">
-										<textarea class="textarea" v-model="task.details"
-											:class="{ 'is-static input has-fixed-size': !task.editable }" :readonly="!task.editable"></textarea>
+										<o-input type="textarea" v-model="task.details"
+											:class="{ 'is-static has-fixed-size': !task.editable }" :readonly="!task.editable" />
 									</div>
 									<div class="card-footer">
-										<button class="card-footer-item button is-link"
-											@click="task.editable ? confirmTask(task) : editTask(task)">{{ task.editable ? 'Confirm' :
-												'Edit' }}</button>
-										<button class="card-footer-item button is-success" @click="completeTask(task)">Complete</button>
-										<button class="card-footer-item button is-danger" @click="deleteTask(task)">Remove</button>
+										<o-button variant="link" class="card-footer-item"
+											@click="task.editable ? confirmTask(task) : editTask(task)"
+											:label="task.editable ? 'Confirm' : 'Edit'" />
+										<o-button variant="success" class="card-footer-item" @click="completeTask(task)" label="Complete" />
+										<o-button variant="danger" class="card-footer-item" @click="deleteTask(task)" label="Remove" />
 									</div>
 								</form>
 							</div>
@@ -188,22 +176,23 @@ const confirmTask = async (task) => {
 						<p class="title">Completed</p>
 					</div>
 					<div class="column is-12" v-if="pending">
-						Loading...
+						<o-skeleton width="25%" count="2" />
+						<o-skeleton width="75%" count="3" />
 					</div>
 					<template v-else>
 						<template v-if="tasks.some((task) => task.completed)">
-							<div class="column is-12" v-for="task in tasks.filter((task) => task.completed)">
+							<div class="column is-12" v-for=" task  in  tasks.filter((task) => task.completed) ">
 								<div class="card">
 									<div class="card-header">
 										<div class="card-header-title">
-											<input type="text" class="input is-static" v-model="task.title" required readonly>
+											<o-input class="is-static" v-model="task.title" required readonly />
 										</div>
 									</div>
 									<div class="card-content" v-if="task.details">
-										<textarea class="textarea is-static input has-fixed-size" v-model="task.details" readonly></textarea>
+										<o-input type="textarea" class="is-static has-fixed-size" v-model="task.details" readonly />
 									</div>
 									<div class="card-footer">
-										<button class="card-footer-item button is-danger" @click="deleteTask(task)">Remove</button>
+										<o-button variant="danger" class="card-footer-item" @click="deleteTask(task)" label="Remove" />
 									</div>
 								</div>
 							</div>
