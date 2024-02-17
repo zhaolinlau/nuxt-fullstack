@@ -36,14 +36,25 @@ const changeEmail = async () => {
 }
 
 const changePassword = async () => {
-	const { error } = await client.auth.updateUser({
-		password: new_password.value
-	})
-	if (error) {
+	try {
+		const { error } = await client.auth.updateUser({
+			password: new_password.value
+		})
+		if (error) {
+			throw error
+		} else {
+			changePasswordSuccess.value = "Your password has been updated."
+			new_password.value = ''
+			changePasswordError.value = ''
+		}
+	} catch (error) {
+		changePasswordSuccess.value = ''
 		changePasswordError.value = error.message
-	} else {
-		changePasswordSuccess.value = "Your password has been updated."
-		new_password.value = ''
+	} finally {
+		setTimeout(() => {
+			changePasswordSuccess.value = ''
+			changePasswordError.value = ''
+		}, 3000);
 	}
 }
 
@@ -73,15 +84,21 @@ const deleteAccount = async () => {
 
 <template>
 	<o-loading v-model:active="loggingOut" iconSize="large" label="Logging out..." />
-	<div class="columns">
-		<div class="column is-12">
-			<form class="box" @submit.prevent="changeEmail">
+	<div class="columns is-multiline">
+		<div class="column is-12 box">
+			<form @submit.prevent="changeEmail" class="column is-6">
+				<div class="block">
+					<span class="title is-5">Update Email</span>
+					<br>
+					<span>
+						Update your account's email address.
+					</span>
+				</div>
 
 				<o-notification variant="success" class="is-light" v-if="changeEmailSuccess" :message="changeEmailSuccess"
 					closable />
 
-				<o-notification variant="success" class="is-light" v-if="changeEmailError" :message="changeEmailError"
-					closable />
+				<o-notification variant="success" class="is-light" v-if="changeEmailError" :message="changeEmailError" closable />
 
 				<o-field label="Current Email">
 					{{ user.email }}
@@ -92,33 +109,48 @@ const deleteAccount = async () => {
 				</o-field>
 
 				<o-field>
-					<o-button nativeType="submit" label="Change Email" />
+					<o-button variant="primary" nativeType="submit" label="Update" />
 				</o-field>
 			</form>
+		</div>
 
-			<form class="box" @submit.prevent="changePassword">
-
-				<div class="notification is-success is-light" v-if="changePasswordSuccess">
-					<button class="delete" @click="changePasswordSuccess = ''"></button>
-					{{ changePasswordSuccess }}
+		<div class="column is-12 box">
+			<form @submit.prevent="changePassword" class="column is-6">
+				<div class="block">
+					<span class="title is-5">Update Password</span>
+					<br>
+					<span>
+						Ensure your account is using a long, random password to stay secure.
+					</span>
 				</div>
+				<o-notification variant="success" class="is-light" :message="changePasswordSuccess" v-if="changePasswordSuccess"
+					closable />
 
-				<div class="notification is-danger is-light" v-if="changePasswordError">
-					<button class="delete" @click="changePasswordError = ''"></button>
-					{{ changePasswordError }}
-				</div>
+				<o-notification variant="danger" class="is-light" :message="changePasswordError" v-if="changePasswordError"
+					closable />
 
 				<o-field label="New Password">
 					<o-input icon="lock" type="password" passwordReveal minlength="6" v-model="new_password" required />
 				</o-field>
 
 				<o-field>
-					<o-button type="submit" label="Change Password" />
+					<o-button variant="primary" nativeType="submit" label="Update" />
 				</o-field>
 			</form>
+		</div>
 
-			<form class="box" @submit.prevent="deleteAccount">
-				<o-field label="Account Deletion">
+		<div class="column is-12 box">
+			<form @submit.prevent="deleteAccount" class="column is-6">
+				<div class="block">
+					<span class="title is-5">Delete Account</span>
+					<br>
+					<span>
+						Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your
+						account, please download any data or information that you wish to retain.
+					</span>
+				</div>
+
+				<o-field>
 					<o-button variant="danger" label="Delete Account" nativeType="submit" />
 				</o-field>
 			</form>
