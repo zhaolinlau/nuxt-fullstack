@@ -86,7 +86,7 @@ const deleteAccount = async () => {
 	<o-loading v-model:active="loggingOut" iconSize="large" label="Logging out..." />
 	<div class="columns is-multiline">
 		<div class="column is-12 box">
-			<form @submit.prevent="changeEmail" class="column is-6">
+			<form @submit.prevent="changeEmail" class="column is-6-desktop is-12-touch">
 				<div class="block">
 					<span class="title is-5">Update Email</span>
 					<br>
@@ -115,7 +115,7 @@ const deleteAccount = async () => {
 		</div>
 
 		<div class="column is-12 box">
-			<form @submit.prevent="changePassword" class="column is-6">
+			<form @submit.prevent="changePassword" class="column is-6-desktop is-12-touch">
 				<div class="block">
 					<span class="title is-5">Update Password</span>
 					<br>
@@ -140,7 +140,7 @@ const deleteAccount = async () => {
 		</div>
 
 		<div class="column is-12 box">
-			<form @submit.prevent="deleteAccount" class="column is-6">
+			<form @submit.prevent="deleteAccount" class="column is-6-desktop is-12-touch">
 				<div class="block">
 					<span class="title is-5">Delete Account</span>
 					<br>
