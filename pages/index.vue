@@ -149,7 +149,7 @@ const confirmTask = async (task) => {
 									:readonly="!task.editable" />
 							</div>
 						</div>
-						<div class="card-content" v-if="task.details">
+						<div class="card-content" v-if="task.details || task.editable">
 							<o-input type="textarea" v-model="task.details" :class="{ 'is-static has-fixed-size': !task.editable }"
 								:readonly="!task.editable" />
 						</div>
