@@ -9,6 +9,7 @@ const email = ref(null)
 const password = ref(null)
 const loginError = ref(null)
 const loggingIn = ref(false)
+const runtimeConfig = useRuntimeConfig()
 
 const login = async () => {
 	try {
@@ -17,10 +18,97 @@ const login = async () => {
 			email: email.value,
 			password: password.value
 		})
-		if (error) throw error
-		return navigateTo('/confirm')
+		if (error) {
+			throw error
+		} else {
+			return navigateTo('/confirm')
+		}
 	} catch (error) {
 		loginError.value = error.message
+	} finally {
+		loggingIn.value = false
+		setTimeout(() => {
+			loginError.value = ''
+		}, 3000)
+	}
+}
+
+const googleLogin = async () => {
+	try {
+		loggingIn.value = true
+		const { error } = await client.auth.signInWithOAuth({
+			provider: 'google',
+			options: {
+				redirectTo: `${runtimeConfig.public.siteURL}/confirm`
+			}
+		})
+		if (error) {
+			throw error
+		}
+	} catch (error) {
+		loginError.value = error.message
+	}
+}
+
+const twitterLogin = async () => {
+	try {
+		loggingIn.value = true
+		const { error } = await client.auth.signInWithOAuth({
+			provider: 'twitter',
+			options: {
+				redirectTo: `${runtimeConfig.public.siteURL}/confirm`
+			}
+		})
+		if (error) {
+			throw error
+		}
+	} catch (error) {
+		loginError.value = error.message
+	} finally {
+		loggingIn.value = false
+		setTimeout(() => {
+			loginError.value = ''
+		}, 3000)
+	}
+}
+
+const facebookLogin = async () => {
+	try {
+		loggingIn.value = true
+		const { error } = await client.auth.signInWithOAuth({
+			provider: 'facebook',
+			options: {
+				redirectTo: `${runtimeConfig.public.siteURL}/confirm`
+			}
+		})
+		if (error) {
+			throw error
+		}
+	} catch (error) {
+		loginError.value = error.message
+	} finally {
+		loggingIn.value = false
+		setTimeout(() => {
+			loginError.value = ''
+		}, 3000)
+	}
+}
+
+const azureLogin = async () => {
+	try {
+		loggingIn.value = true
+		const { error } = await client.auth.signInWithOAuth({
+			provider: 'azure',
+			options: {
+				scopes: 'email',
+				redirectTo: `${runtimeConfig.public.siteURL}/confirm`
+			}
+		})
+		if (error) {
+			throw error
+		}
+	} catch (error) {
+		console.log(error)
 	} finally {
 		loggingIn.value = false
 		setTimeout(() => {
@@ -32,34 +120,59 @@ const login = async () => {
 
 <template>
 	<div class="columns is-centered">
-		<div class="column is-6-desktop is-12-touch">
-			<form class="box" @submit.prevent="login">
+		<div class="column is-6-desktop is-12-touch box">
+
+			<div class="p-3">
 				<p class="title has-text-centered">
 					Login
 				</p>
 
 				<o-notification :message="loginError" variant="danger" class="is-light" v-if="loginError" closable />
+				
+				<div class="columns is-centered is-mobile">
+					<div class="column">
+						<o-button expanded iconLeft="google" @click="googleLogin" />
+					</div>
 
-				<o-field label="Email">
-					<o-input icon="email" type="email" v-model="email" required />
-				</o-field>
+					<div class="column">
+						<o-button expanded iconLeft="facebook" @click="facebookLogin" />
+					</div>
 
-				<o-field label="Password">
-					<o-input icon="lock" type="password" minlength="6" passwordReveal v-model="password" required />
-				</o-field>
+					<div class="column">
+						<o-button expanded iconLeft="microsoft" @click="azureLogin" />
+					</div>
 
-				<o-field class="has-text-right">
-					<NuxtLink to="/forgot_password">Forgot password?</NuxtLink>
-				</o-field>
+					<div class="column">
+						<o-button expanded iconLeft="twitter" @click="twitterLogin" />
+					</div>
+				</div>
 
-				<o-field>
-					<o-button rounded variant="primary" expanded :loading="loggingIn" label="Login" nativeType="submit" />
-				</o-field>
+				<hr>
 
-				<o-field>
-					<o-button rounded variant="link" expanded @click="navigateTo('/register')" label="Create account" />
-				</o-field>
-			</form>
+				<form @submit.prevent="login">
+
+					<o-field label="Email">
+						<o-input icon="email" type="email" v-model="email" required />
+					</o-field>
+
+					<o-field label="Password">
+						<o-input icon="lock" type="password" minlength="6" passwordReveal v-model="password" required />
+					</o-field>
+
+					<o-field class="has-text-right">
+						<NuxtLink to="/forgot_password">Forgot password?</NuxtLink>
+					</o-field>
+
+					<o-field>
+						<o-button rounded variant="primary" :disabled="loggingIn" expanded :loading="loggingIn" label="Login"
+							nativeType="submit" />
+					</o-field>
+
+					<o-field>
+						<o-button rounded variant="link" expanded @click="navigateTo('/register')" label="Create account" />
+					</o-field>
+				</form>
+			</div>
 		</div>
 	</div>
 </template>
