@@ -1,7 +1,4 @@
-import {
-	serverSupabaseClient,
-	serverSupabaseServiceRole,
-} from "#supabase/server";
+import { serverSupabaseServiceRole } from "#supabase/server";
 
 export default defineEventHandler(async (event) => {
 	const serviceRole = serverSupabaseServiceRole(event);
