@@ -24,9 +24,8 @@ const login = async () => {
 			return navigateTo('/confirm')
 		}
 	} catch (error) {
-		loginError.value = error.message
-	} finally {
 		loggingIn.value = false
+		loginError.value = error.message
 		setTimeout(() => {
 			loginError.value = ''
 		}, 3000)
@@ -46,7 +45,11 @@ const googleLogin = async () => {
 			throw error
 		}
 	} catch (error) {
+		loggingIn.value = false
 		loginError.value = error.message
+		setTimeout(() => {
+			loginError.value = ''
+		}, 3000)
 	}
 }
 
@@ -63,9 +66,8 @@ const twitterLogin = async () => {
 			throw error
 		}
 	} catch (error) {
-		loginError.value = error.message
-	} finally {
 		loggingIn.value = false
+		loginError.value = error.message
 		setTimeout(() => {
 			loginError.value = ''
 		}, 3000)
@@ -85,9 +87,8 @@ const facebookLogin = async () => {
 			throw error
 		}
 	} catch (error) {
-		loginError.value = error.message
-	} finally {
 		loggingIn.value = false
+		loginError.value = error.message
 		setTimeout(() => {
 			loginError.value = ''
 		}, 3000)
@@ -108,9 +109,8 @@ const azureLogin = async () => {
 			throw error
 		}
 	} catch (error) {
-		console.log(error)
-	} finally {
 		loggingIn.value = false
+		loginError.value = error.message
 		setTimeout(() => {
 			loginError.value = ''
 		}, 3000)
@@ -128,7 +128,7 @@ const azureLogin = async () => {
 				</p>
 
 				<o-notification :message="loginError" variant="danger" class="is-light" v-if="loginError" closable />
-				
+
 				<div class="columns is-centered is-mobile">
 					<div class="column">
 						<o-button expanded iconLeft="google" @click="googleLogin" />
