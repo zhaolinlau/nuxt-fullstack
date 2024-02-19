@@ -11,7 +11,7 @@ export default defineNuxtConfig({
 		},
 	},
 	plugins: ["plugins/oruga"],
-	modules: ["@nuxtjs/supabase", "@nuxtjs/turnstile"],
+	modules: ["@nuxtjs/supabase", "nuxt-security"],
 	supabase: {
 		redirectOptions: {
 			login: "/login",

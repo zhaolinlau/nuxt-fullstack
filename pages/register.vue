@@ -11,7 +11,6 @@ const registerError = ref('')
 const registerSuccess = ref('')
 const registering = ref(false)
 const runtimeConfig = useRuntimeConfig()
-const token = ref('')
 
 const register = async () => {
 	try {
@@ -20,8 +19,7 @@ const register = async () => {
 			email: email.value,
 			password: password.value,
 			options: {
-				emailRedirectTo: `${runtimeConfig.public.siteURL}/confirm`,
-				captchaToken: token
+				emailRedirectTo: `${runtimeConfig.public.siteURL}/confirm`
 			},
 		})
 
@@ -67,8 +65,6 @@ const register = async () => {
 				<o-field label="Password">
 					<o-input icon="lock" passwordReveal type="password" v-model="password" minlength="6" required />
 				</o-field>
-
-				<NuxtTurnstile v-model="token" required />
 
 				<o-field>
 					<o-button variant="primary" rounded expanded :loading="registering" label="Register" nativeType="submit" />
