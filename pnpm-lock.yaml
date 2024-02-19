@@ -19,6 +19,9 @@ devDependencies:
   '@nuxtjs/supabase':
     specifier: ^1.1.6
     version: 1.1.6
+  '@nuxtjs/turnstile':
+    specifier: ^0.6.3
+    version: 0.6.3
   nuxt:
     specifier: ^3.10.2
     version: 3.10.2(sass@1.71.0)(vite@5.1.1)
@@ -1298,6 +1301,17 @@ packages:
       - rollup
       - supports-color
       - utf-8-validate
+    dev: true
+
+  /@nuxtjs/turnstile@0.6.3:
+    resolution: {integrity: sha512-POo7J6mlN4apRKQQziyvbBN7IsOtDiDuH0euAWrFv5LUBuBlPcARJMsBhziYWp7hTSGpqS/DHj8/5mrVltQdzg==}
+    dependencies:
+      '@nuxt/kit': 3.10.2
+      defu: 6.1.4
+      pathe: 1.1.2
+    transitivePeerDependencies:
+      - rollup
+      - supports-color
     dev: true
 
   /@oruga-ui/oruga-next@0.7.0(vue@3.4.19):
