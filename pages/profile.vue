@@ -59,25 +59,27 @@ const changePassword = async () => {
 }
 
 const deleteAccount = async () => {
-	loggingOut.value = true
-	await $fetch('/api/account', {
-		method: 'delete',
-		body: {
-			userId: user.value.id
-		}
-	})
-
 	try {
-		const { error } = await client.auth.signOut()
+		loggingOut.value = true
+		const { error } = await $fetch('/api/account', {
+			method: 'delete',
+			body: {
+				userId: user.value.id
+			}
+		})
 		if (error) {
 			throw error
 		} else {
-			return navigateTo('/login')
+			const { error } = await client.auth.signOut()
+			if (error) {
+				throw error
+			} else {
+				return navigateTo('/login')
+			}
 		}
 	} catch (error) {
-		showError(error.message)
-	} finally {
 		loggingOut.value = false
+		console.log(error.message)
 	}
 }
 </script>
