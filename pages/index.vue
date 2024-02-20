@@ -12,6 +12,7 @@ const title = ref('')
 const details = ref('')
 const showTaskForm = ref(false)
 const edit = ref(false)
+const no = ref(0)
 
 const addTask = async () => {
 	try {
@@ -41,7 +42,9 @@ const addTask = async () => {
 	}
 }
 
-const { data: tasks, refresh: refreshTasks, pending } = await useFetch('/api/tasks')
+const { data: tasks, refresh: refreshTasks, pending } = await useFetch('/api/tasks', {
+	method: 'get'
+})
 
 const tasksChannel = client.channel('tasksChannel')
 	.on('postgres_changes', {
@@ -61,9 +64,20 @@ onUnmounted(() => {
 })
 
 const deleteTask = async (task) => {
-	await client.from("tasks")
-		.delete()
-		.eq("id", task.id)
+	try {
+		const { error } = await $fetch('/api/task', {
+			method: 'delete',
+			body: {
+				taskId: task.id
+			}
+		})
+
+		if (error) {
+			throw error
+		}
+	} catch (error) {
+		showError(error.message)
+	}
 }
 
 const completeTask = async (task) => {
@@ -139,6 +153,7 @@ const confirmTask = async (task) => {
 					<form class="card" @submit.prevent="updateTask(task)">
 						<div class="card-header">
 							<div class="card-header-title">
+								<!-- {{ no++ }} -->
 								<o-input v-model="task.title" :class="{ 'is-static': !task.editable }" required
 									:readonly="!task.editable" />
 							</div>
