@@ -3,8 +3,6 @@ definePageMeta({
 	middleware: 'auth'
 })
 
-import { RealtimeChannel } from '@supabase/supabase-js'
-let realtimeChannel = RealtimeChannel
 const client = useSupabaseClient()
 const user = useSupabaseUser()
 const addError = ref('')
@@ -43,27 +41,23 @@ const addTask = async () => {
 	}
 }
 
-const { data: tasks, refresh: refreshTasks, pending } = useAsyncData('tasks', async () => {
-	const { data } = await client
-		.from("tasks")
-		.select("*")
-		.eq("user_id", user.value.id)
-		.order('created_at', { ascending: false })
-	return data
-})
+const { data: tasks, refresh: refreshTasks, pending } = await useFetch('/api/tasks')
 
-onMounted(() => {
-	realtimeChannel = client.channel('public:tasks').on(
-		'postgres_changes',
-		{ event: '*', schema: 'public', table: 'tasks' },
+const tasksChannel = client.channel('tasksChannel')
+	.on('postgres_changes', {
+		event: '*',
+		schema: 'public',
+		table: 'tasks'
+	},
 		() => refreshTasks()
 	)
 
-	realtimeChannel.subscribe()
+onMounted(() => {
+	tasksChannel.subscribe()
 })
 
 onUnmounted(() => {
-	client.removeChannel(realtimeChannel)
+	client.removeChannel(tasksChannel)
 })
 
 const deleteTask = async (task) => {
