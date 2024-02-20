@@ -149,11 +149,10 @@ const confirmTask = async (task) => {
 		</div>
 		<template v-else>
 			<template v-if="tasks.some((task) => !task.completed)">
-				<div class="column is-12" v-for=" task  in  tasks.filter((task) => !task.completed) ">
+				<div class="column is-12" v-for="task in tasks.filter((task) => !task.completed) ">
 					<form class="card" @submit.prevent="updateTask(task)">
 						<div class="card-header">
 							<div class="card-header-title">
-								<!-- {{ no++ }} -->
 								<o-input v-model="task.title" :class="{ 'is-static': !task.editable }" required
 									:readonly="!task.editable" />
 							</div>
