@@ -62,10 +62,7 @@ const deleteAccount = async () => {
 	try {
 		loggingOut.value = true
 		const { error } = await $fetch('/api/account', {
-			method: 'delete',
-			body: {
-				userId: user.value.id
-			}
+			method: 'delete'
 		})
 		if (error) {
 			throw error
@@ -74,6 +71,7 @@ const deleteAccount = async () => {
 			if (error) {
 				throw error
 			} else {
+				reloadNuxtApp()
 				return navigateTo('/login')
 			}
 		}

@@ -7,17 +7,16 @@ const loggingOut = ref(false)
 const logout = async () => {
 	try {
 		loggingOut.value = true
-		const { error } = await client.auth.signOut()
+		const { error } = await client.auth.signOut();
 		if (error) {
 			throw error
-		}
-		else {
+		} else {
+			reloadNuxtApp()
 			return navigateTo('/login')
 		}
 	} catch (error) {
-		return showError(error.message)
-	} finally {
 		loggingOut.value = false
+		return showError(error.message)
 	}
 }
 </script>
