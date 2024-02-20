@@ -79,7 +79,7 @@ const deleteAccount = async () => {
 		}
 	} catch (error) {
 		loggingOut.value = false
-		console.log(error.message)
+		showError(error.message)
 	}
 }
 </script>

@@ -4,7 +4,6 @@ export default defineNuxtConfig({
 	typescript: {
 		shim: false,
 	},
-	ssr: false,
 	runtimeConfig: {
 		public: {
 			siteURL: process.env.NUXT_PUBLIC_SITE_URL,
