@@ -65,7 +65,7 @@ const deleteTask = async (task) => {
 		const { error } = await $fetch('/api/task', {
 			method: 'delete',
 			body: {
-				taskId: task.id
+				id: task.id
 			}
 		})
 
