@@ -120,7 +120,7 @@ const confirmTask = async (task) => {
 					</o-field>
 
 					<o-field label="Task Details">
-						<o-input v-model="details" type="textarea" required />
+						<o-input v-model="details" type="textarea" />
 					</o-field>
 
 					<o-field>
