@@ -15,7 +15,7 @@ export type Database = {
           created_at: string
           details: string | null
           editable: boolean
-          id: number
+          id: string
           title: string
           updated_at: string
           user_id: string
@@ -25,7 +25,7 @@ export type Database = {
           created_at?: string
           details?: string | null
           editable?: boolean
-          id?: number
+          id?: string
           title?: string
           updated_at?: string
           user_id?: string
@@ -35,14 +35,14 @@ export type Database = {
           created_at?: string
           details?: string | null
           editable?: boolean
-          id?: number
+          id?: string
           title?: string
           updated_at?: string
           user_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "public_task_user_id_fkey"
+            foreignKeyName: "public_tasks_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
