@@ -43,6 +43,10 @@ const { data: tasks, refresh: refreshTasks, pending } = await useFetch('/api/tas
 	method: 'get'
 })
 
+tasks.value.forEach(task => {
+	task.editable = false
+});
+
 const tasksChannel = client.channel('tasksChannel')
 	.on('postgres_changes', {
 		event: '*',
@@ -104,6 +108,18 @@ const confirmTask = async (task) => {
 		edit.value = false
 	}
 }
+
+const incompleteTasks = computed(() => {
+	if (tasks.value.some((task) => !task.completed)) {
+		return tasks.value.filter((task) => !task.completed)
+	}
+})
+
+const completedTasks = computed(() => {
+	if (tasks.value.some((task) => task.completed)) {
+		return tasks.value.filter((task) => task.completed)
+	}
+})
 </script>
 
 <template>
@@ -143,8 +159,8 @@ const confirmTask = async (task) => {
 			<o-skeleton width="75%" :count="3" />
 		</div>
 		<template v-else>
-			<template v-if="tasks.some((task) => !task.completed)">
-				<div class="column is-12" v-for="task in tasks.filter((task) => !task.completed) ">
+			<template v-if="incompleteTasks">
+				<div class="column is-12" v-for="task in incompleteTasks">
 					<form class="card" @submit.prevent="updateTask(task)">
 						<div class="card-header">
 							<div class="card-header-title">
@@ -178,8 +194,8 @@ const confirmTask = async (task) => {
 			<o-skeleton width="75%" :count="3" />
 		</div>
 		<template v-else>
-			<template v-if="tasks.some((task) => task.completed)">
-				<div class="column is-12" v-for=" task  in  tasks.filter((task) => task.completed) ">
+			<template v-if="completedTasks">
+				<div class="column is-12" v-for="task in completedTasks">
 					<div class="card">
 						<div class="card-header">
 							<div class="card-header-title">

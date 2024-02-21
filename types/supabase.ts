@@ -14,7 +14,6 @@ export type Database = {
           completed: boolean
           created_at: string
           details: string | null
-          editable: boolean
           id: string
           title: string
           updated_at: string
@@ -24,7 +23,6 @@ export type Database = {
           completed?: boolean
           created_at?: string
           details?: string | null
-          editable?: boolean
           id?: string
           title?: string
           updated_at?: string
@@ -34,7 +32,6 @@ export type Database = {
           completed?: boolean
           created_at?: string
           details?: string | null
-          editable?: boolean
           id?: string
           title?: string
           updated_at?: string
