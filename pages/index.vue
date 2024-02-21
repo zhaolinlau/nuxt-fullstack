@@ -2,9 +2,7 @@
 definePageMeta({
 	middleware: 'auth'
 })
-
 const client = useSupabaseClient()
-const user = useSupabaseUser()
 const addError = ref('')
 const addSuccess = ref('')
 const adding = ref(false)
@@ -12,18 +10,17 @@ const title = ref('')
 const details = ref('')
 const showTaskForm = ref(false)
 const edit = ref(false)
-const no = ref(0)
 
 const addTask = async () => {
 	try {
 		adding.value = true
-		const { error } = await client
-			.from("tasks")
-			.insert({
-				user_id: user.value.id,
+		const { error } = await $fetch('/api/task', {
+			method: 'post',
+			body: {
 				title: title.value,
 				details: details.value
-			});
+			}
+		})
 		title.value = ''
 		details.value = ''
 		addSuccess.value = 'Added a new task.'
@@ -84,7 +81,6 @@ const completeTask = async (task) => {
 	await client.from("tasks")
 		.update({
 			completed: true,
-			updated_at: new Date()
 		})
 		.eq("id", task.id)
 }
@@ -94,15 +90,14 @@ const editTask = async (task) => {
 }
 
 const confirmTask = async (task) => {
-	const { error } = await client
-		.from('tasks')
-		.update({
+	const { error } = await $fetch('/api/task', {
+		method: 'put',
+		body: {
+			id: task.id,
 			title: task.title,
 			details: task.details
-		})
-		.eq('id', task.id)
-		.select()
-
+		}
+	})
 	if (error) {
 		console.log(error)
 	} else {
