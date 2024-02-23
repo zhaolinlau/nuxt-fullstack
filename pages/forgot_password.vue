@@ -13,7 +13,7 @@ const runtimeConfig = useRuntimeConfig()
 const sendOTPLink = async () => {
 	try {
 		sending.value = true
-		const { data, error } = await client.auth.signInWithOtp({
+		const { error } = await client.auth.signInWithOtp({
 			email: email.value,
 			options: {
 				shouldCreateUser: false,

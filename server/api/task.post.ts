@@ -4,7 +4,7 @@ import { Database } from "~/types/supabase";
 export default defineEventHandler(async (event) => {
 	const client = await serverSupabaseClient<Database>(event);
 	const { title, details } = await readBody(event);
-	const { data, error } = await client
+	const { error } = await client
 		.from("tasks")
 		.insert([
 			{
@@ -15,10 +15,6 @@ export default defineEventHandler(async (event) => {
 		.select();
 
 	if (error) {
-		throw createError({
-			message: error.message,
-		});
-	} else {
-		return data;
+		throw error;
 	}
 });

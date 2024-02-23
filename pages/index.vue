@@ -14,8 +14,8 @@ const edit = ref(false)
 const addTask = async () => {
 	try {
 		adding.value = true
-		const { error } = await $fetch('/api/task', {
-			method: 'post',
+		await $fetch('/api/task', {
+			method: 'POST',
 			body: {
 				title: title.value,
 				details: details.value
@@ -26,7 +26,6 @@ const addTask = async () => {
 		addSuccess.value = 'Added a new task.'
 		addError.value = ''
 		showTaskForm.value = false
-		if (error) throw error
 	} catch (error) {
 		addError.value = error.message
 		addSuccess.value = ''
@@ -40,7 +39,7 @@ const addTask = async () => {
 }
 
 const { data: tasks, refresh: refreshTasks, pending } = await useFetch('/api/tasks', {
-	method: 'get'
+	method: 'GET'
 })
 
 tasks.value.forEach(task => {
@@ -66,27 +65,27 @@ onUnmounted(() => {
 
 const deleteTask = async (task) => {
 	try {
-		const { error } = await $fetch('/api/task', {
+		await $fetch('/api/task', {
 			method: 'delete',
 			body: {
 				id: task.id
 			}
 		})
-
-		if (error) {
-			throw error
-		}
 	} catch (error) {
 		showError(error.message)
 	}
 }
 
 const completeTask = async (task) => {
-	await client.from("tasks")
+	const { error } = await client.from("tasks")
 		.update({
 			completed: true,
 		})
 		.eq("id", task.id)
+
+	if (error) {
+		throw error
+	}
 }
 
 const editTask = async (task) => {
@@ -94,18 +93,18 @@ const editTask = async (task) => {
 }
 
 const confirmTask = async (task) => {
-	const { error } = await $fetch('/api/task', {
-		method: 'put',
-		body: {
-			id: task.id,
-			title: task.title,
-			details: task.details
-		}
-	})
-	if (error) {
-		console.log(error)
-	} else {
+	try {
+		await $fetch('/api/task', {
+			method: 'PUT',
+			body: {
+				id: task.id,
+				title: task.title,
+				details: task.details
+			}
+		})
 		edit.value = false
+	} catch (error) {
+		showError(error)
 	}
 }
 
