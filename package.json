@@ -7,8 +7,7 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "gen:types": "supabase gen types typescript --project-id qukglculcapwxnrskqfn --schema public > types/supabase.ts"
+    "postinstall": "nuxt prepare"
   },
   "devDependencies": {
     "@nuxtjs/supabase": "^1.1.6",
