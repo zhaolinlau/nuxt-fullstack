@@ -11,12 +11,12 @@ const logout = async () => {
 		if (error) {
 			throw error
 		} else {
-			reloadNuxtApp()
-			return navigateTo('/login')
+			await refreshNuxtData()
+			await navigateTo('/login')
 		}
 	} catch (error) {
 		loggingOut.value = false
-		return showError(error.message)
+		showError(error.message)
 	}
 }
 </script>
@@ -41,7 +41,7 @@ const logout = async () => {
 
 				<div class="navbar-item has-dropdown is-hoverable">
 					<a class="navbar-link">
-						{{ user.email }}
+						{{ user?.email }}
 					</a>
 
 					<div class="navbar-dropdown is-right is-boxed">
