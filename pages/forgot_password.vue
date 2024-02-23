@@ -1,4 +1,8 @@
 <script setup>
+useHead({
+	title: 'To-do List | Forgot Password'
+})
+
 definePageMeta({
 	layout: 'guest',
 	middleware: 'guest'

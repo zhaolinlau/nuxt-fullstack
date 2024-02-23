@@ -1,4 +1,8 @@
 <script setup>
+useHead({
+	title: 'To-do List | Register'
+})
+
 definePageMeta({
 	layout: 'guest',
 	middleware: 'guest'

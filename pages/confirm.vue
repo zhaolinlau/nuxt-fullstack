@@ -1,4 +1,8 @@
 <script setup>
+useHead({
+	title: 'To-do List | Redirecting...'
+})
+
 definePageMeta({
 	layout: 'guest',
 	middleware: 'auth'

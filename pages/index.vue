@@ -1,4 +1,8 @@
 <script setup>
+useHead({
+	title: 'To-do List | Home'
+})
+
 definePageMeta({
 	middleware: 'auth'
 })
