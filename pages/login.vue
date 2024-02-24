@@ -9,9 +9,9 @@ definePageMeta({
 })
 
 const client = useSupabaseClient()
-const email = ref(null)
-const password = ref(null)
-const loginError = ref(null)
+const email = ref('')
+const password = ref('')
+const loginError = ref('')
 const loggingIn = ref(false)
 const runtimeConfig = useRuntimeConfig()
 
@@ -25,7 +25,7 @@ const login = async () => {
 		if (error) {
 			throw error
 		} else {
-			return navigateTo('/confirm')
+			await navigateTo('/confirm')
 		}
 	} catch (error) {
 		loggingIn.value = false

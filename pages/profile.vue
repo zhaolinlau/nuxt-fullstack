@@ -65,19 +65,15 @@ const changePassword = async () => {
 const deleteAccount = async () => {
 	try {
 		loggingOut.value = true
-		const { error } = await $fetch('/api/account', {
+		await $fetch('/api/account', {
 			method: 'delete'
 		})
+		const { error } = await client.auth.signOut()
 		if (error) {
 			throw error
 		} else {
-			const { error } = await client.auth.signOut()
-			if (error) {
-				throw error
-			} else {
-				reloadNuxtApp()
-				return navigateTo('/login')
-			}
+			await refreshNuxtData()
+			await navigateTo('/login')
 		}
 	} catch (error) {
 		loggingOut.value = false

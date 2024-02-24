@@ -6,6 +6,9 @@ export default defineEventHandler(async (event) => {
 	const { error } = await client.from("tasks").delete().eq("id", id);
 
 	if (error) {
-		throw error;
+		throw createError({
+			statusCode: error.code,
+			statusMessage: error.message,
+		});
 	}
 });

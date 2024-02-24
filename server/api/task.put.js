@@ -10,6 +10,9 @@ export default defineEventHandler(async (event) => {
 		.select();
 
 	if (error) {
-		throw error;
+		throw createError({
+			statusCode: error.code,
+			statusMessage: error.message,
+		});
 	}
 });

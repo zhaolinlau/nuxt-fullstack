@@ -7,13 +7,16 @@ export default defineEventHandler(async (event) => {
 		.from("tasks")
 		.insert([
 			{
-				title: title,
+				titsle: title,
 				details: details,
 			},
 		])
 		.select();
 
 	if (error) {
-		throw error;
+		throw createError({
+			statusCode: error.code,
+			statusMessage: error.message,
+		});
 	}
 });

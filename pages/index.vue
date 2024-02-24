@@ -6,6 +6,7 @@ useHead({
 definePageMeta({
 	middleware: 'auth'
 })
+
 const client = useSupabaseClient()
 const addError = ref('')
 const addSuccess = ref('')
@@ -81,14 +82,18 @@ const deleteTask = async (task) => {
 }
 
 const completeTask = async (task) => {
-	const { error } = await client.from("tasks")
-		.update({
-			completed: true,
-		})
-		.eq("id", task.id)
+	try {
+		const { error } = await client.from("tasks")
+			.update({
+				completed: true,
+			})
+			.eq("id", task.id)
 
-	if (error) {
-		throw error
+		if (error) {
+			throw error
+		}
+	} catch (error) {
+		showError(error.message)
 	}
 }
 
@@ -108,7 +113,7 @@ const confirmTask = async (task) => {
 		})
 		edit.value = false
 	} catch (error) {
-		showError(error)
+		showError(error.message)
 	}
 }
 
@@ -135,7 +140,7 @@ const completedTasks = computed(() => {
 					<o-notification variant="danger" class="is-light" :message="addError" v-if="addError" closable />
 
 					<o-field label="Task Title">
-						<o-input v-model="title" required />
+						<o-input v-model="title" />
 					</o-field>
 
 					<o-field label="Task Details">
