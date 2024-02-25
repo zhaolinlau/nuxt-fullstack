@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
 		.from("tasks")
 		.insert([
 			{
-				titsle: title,
+				title: title,
 				details: details,
 			},
 		])
