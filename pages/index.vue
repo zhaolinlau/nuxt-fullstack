@@ -1,6 +1,6 @@
 <script setup>
 useHead({
-	title: 'To-do List | Home'
+	title: 'To-dos | Home'
 })
 
 definePageMeta({
