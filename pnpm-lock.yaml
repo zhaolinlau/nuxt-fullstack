@@ -11,9 +11,9 @@ dependencies:
   '@oruga-ui/oruga-next':
     specifier: 0.7.0
     version: 0.7.0(vue@3.4.20)
-  '@oruga-ui/theme-oruga':
-    specifier: ^0.2.2
-    version: 0.2.2
+  '@oruga-ui/theme-bulma':
+    specifier: ^0.2.11
+    version: 0.2.11
 
 devDependencies:
   '@nuxtjs/supabase':
@@ -1263,8 +1263,10 @@ packages:
       vue: 3.4.20
     dev: false
 
-  /@oruga-ui/theme-oruga@0.2.2:
-    resolution: {integrity: sha512-0l5Td4y75He0Yz0I8FkP4TcMaEpeBFeDv49RZyiQm23gfdCqpeZyLQfhHU++e5OTjfd1llHtUA+DtTLIXgdspg==}
+  /@oruga-ui/theme-bulma@0.2.11:
+    resolution: {integrity: sha512-yMYNTWDNZQ0qyzAlWVyvEO/ZDRjRIyPDTf58IL+OVJuVCsq1Nn/4nFltemuQA1foL6KpsqXMFT9pBTf4wQHMPw==}
+    dependencies:
+      bulma: 0.9.4
     dev: false
 
   /@parcel/watcher-android-arm64@2.4.1:
@@ -2357,6 +2359,10 @@ packages:
     dependencies:
       semver: 7.6.0
     dev: true
+
+  /bulma@0.9.4:
+    resolution: {integrity: sha512-86FlT5+1GrsgKbPLRRY7cGDg8fsJiP/jzTqXXVqiUZZ2aZT8uemEOHlU1CDU+TxklPEZ11HZNNWclRBBecP4CQ==}
+    dev: false
 
   /bundle-name@4.1.0:
     resolution: {integrity: sha512-tjwM5exMg6BGRI+kNmTntNsvdZS1X8BFYS6tnJ2hdH0kVxM6/eVZ2xy+FqStSWvYmtfFMDLIxurorHwDKfDz5Q==}
