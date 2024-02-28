@@ -140,7 +140,7 @@ const completedTasks = computed(() => {
 					<o-notification variant="danger" class="is-light" :message="addError" v-if="addError" closable />
 
 					<o-field label="Task Title">
-						<o-input v-model="title" />
+						<o-input v-model="title" required />
 					</o-field>
 
 					<o-field label="Task Details">
