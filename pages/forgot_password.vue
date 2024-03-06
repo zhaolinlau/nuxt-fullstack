@@ -36,10 +36,6 @@ const sendOTPLink = async () => {
 		sendSuccess.value = ''
 	} finally {
 		sending.value = false
-		setTimeout(() => {
-			sendError.value = ''
-			sendSuccess.value = ''
-		}, 3000);
 	}
 }
 </script>
@@ -51,22 +47,22 @@ const sendOTPLink = async () => {
 				<p class="title has-text-centered">
 					One-time Password (OTP)
 				</p>
-				
-				<o-notification variant="success" class="is-light" :message="sendSuccess" v-if="sendSuccess" closable />
 
-				<o-notification variant="danger" class="is-light" :message="sendError" v-if="sendError" closable />
+				<b-notification type="is-success is-light" :message="sendSuccess" v-if="sendSuccess" closable />
 
-				<o-field label="Email">
-					<o-input icon="email" v-model="email" type="email" required />
-				</o-field>
+				<b-notification type="is-danger is-light" :message="sendError" v-if="sendError" closable />
 
-				<o-field>
-					<o-button rounded variant="primary" expanded :loading="sending" nativeType="submit" label="Send" />
-				</o-field>
+				<b-field label="Email">
+					<b-input icon="email" v-model="email" type="email" required />
+				</b-field>
 
-				<o-field>
-					<o-button rounded variant="link" expanded @click="navigateTo('/login')" label="Back to login" />
-				</o-field>
+				<b-field>
+					<b-button rounded type="is-primary" expanded :loading="sending" native-type="submit" label="Send" />
+				</b-field>
+
+				<b-field>
+					<b-button rounded type="is-link" expanded @click="navigateTo('/login')" label="Back to login" />
+				</b-field>
 			</form>
 		</div>
 	</div>

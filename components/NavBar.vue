@@ -1,7 +1,6 @@
 <script setup>
 const client = useSupabaseClient()
 const user = useSupabaseUser()
-const showNav = ref(false)
 const loggingOut = ref(false)
 
 const logout = async () => {
@@ -22,40 +21,26 @@ const logout = async () => {
 </script>
 
 <template>
-	<o-loading v-model:active="loggingOut" iconSize="large" label="Logging out..." />
-	<nav class="navbar is-fixed-top has-shadow" role="navigation" aria-label="main navigation">
-		<div class="navbar-brand">
-			<NuxtLink class="navbar-item" to="/">
+	<b-loading v-model="loggingOut" />
+
+	<b-navbar fixed-top shadow>
+		<template #brand>
+			<b-navbar-item @click="navigateTo('/')">
 				To-dos
-			</NuxtLink>
+			</b-navbar-item>
+		</template>
 
-			<a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" @click="showNav = !showNav">
-				<span aria-hidden="true"></span>
-				<span aria-hidden="true"></span>
-				<span aria-hidden="true"></span>
-			</a>
-		</div>
+		<template #end>
+			<b-navbar-dropdown :label="user.email" hoverable boxed collapsible right>
+				<b-navbar-item @click="navigateTo('/profile')">
+					Profile
+				</b-navbar-item>
+				<hr class="navbar-divider">
+				<b-navbar-item @click="logout">
+					Logout
+				</b-navbar-item>
+			</b-navbar-dropdown>
+		</template>
 
-		<div class="navbar-menu" :class="{ 'is-active': showNav }">
-			<div class="navbar-end">
-
-				<div class="navbar-item has-dropdown is-hoverable">
-					<a class="navbar-link">
-						{{ user?.email }}
-					</a>
-
-					<div class="navbar-dropdown is-right is-boxed">
-						<NuxtLink class="navbar-item" to="/profile">
-							My Profile
-						</NuxtLink>
-						<hr class="navbar-divider">
-						<a class="navbar-item" @click="logout">
-							Logout
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-
-	</nav>
+	</b-navbar>
 </template>

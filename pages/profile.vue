@@ -31,11 +31,6 @@ const changeEmail = async () => {
 	} catch (error) {
 		changeEmailError.value = error.message
 		changeEmailSuccess.value = ''
-	} finally {
-		setTimeout(() => {
-			changeEmailSuccess.value = ''
-			changeEmailError.value = ''
-		}, 3000);
 	}
 }
 
@@ -54,11 +49,6 @@ const changePassword = async () => {
 	} catch (error) {
 		changePasswordSuccess.value = ''
 		changePasswordError.value = error.message
-	} finally {
-		setTimeout(() => {
-			changePasswordSuccess.value = ''
-			changePasswordError.value = ''
-		}, 3000);
 	}
 }
 
@@ -83,7 +73,7 @@ const deleteAccount = async () => {
 </script>
 
 <template>
-	<o-loading v-model:active="loggingOut" iconSize="large" label="Logging out..." />
+	<b-loading v-model="loggingOut" />
 	<div class="columns is-multiline">
 		<div class="column is-12 box">
 			<form @submit.prevent="changeEmail" class="column is-6-desktop is-12-touch">
@@ -95,22 +85,21 @@ const deleteAccount = async () => {
 					</span>
 				</div>
 
-				<o-notification variant="success" class="is-light" v-if="changeEmailSuccess" :message="changeEmailSuccess"
-					closable />
+				<b-notification type="is-success is-light" v-if="changeEmailSuccess" :message="changeEmailSuccess" closable />
 
-				<o-notification variant="success" class="is-light" v-if="changeEmailError" :message="changeEmailError" closable />
+				<b-notification type="is-danger is-light" v-if="changeEmailError" :message="changeEmailError" closable />
 
-				<o-field label="Current Email">
+				<b-field label="Current Email">
 					{{ user.email }}
-				</o-field>
+				</b-field>
 
-				<o-field label="New Email">
-					<o-input icon="email" type="email" v-model="new_email" required />
-				</o-field>
+				<b-field label="New Email">
+					<b-input icon="email" type="email" v-model="new_email" required />
+				</b-field>
 
-				<o-field>
-					<o-button variant="primary" nativeType="submit" label="Update" />
-				</o-field>
+				<b-field>
+					<b-button type="is-primary" native-type="submit" label="Save" />
+				</b-field>
 			</form>
 		</div>
 
@@ -123,19 +112,18 @@ const deleteAccount = async () => {
 						Ensure your account is using a long, random password to stay secure.
 					</span>
 				</div>
-				<o-notification variant="success" class="is-light" :message="changePasswordSuccess" v-if="changePasswordSuccess"
+				<b-notification type="is-success is-light" :message="changePasswordSuccess" v-if="changePasswordSuccess"
 					closable />
 
-				<o-notification variant="danger" class="is-light" :message="changePasswordError" v-if="changePasswordError"
-					closable />
+				<b-notification type="is-danger is-light" :message="changePasswordError" v-if="changePasswordError" closable />
 
-				<o-field label="New Password">
-					<o-input icon="lock" type="password" passwordReveal minlength="6" v-model="new_password" required />
-				</o-field>
+				<b-field label="New Password">
+					<b-input icon="lock" type="password" password-reveal minlength="6" v-model="new_password" required />
+				</b-field>
 
-				<o-field>
-					<o-button variant="primary" nativeType="submit" label="Update" />
-				</o-field>
+				<b-field>
+					<b-button type="is-primary" native-type="submit" label="Save" />
+				</b-field>
 			</form>
 		</div>
 
@@ -145,14 +133,15 @@ const deleteAccount = async () => {
 					<span class="title is-5">Delete Account</span>
 					<br>
 					<span>
-						Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your
+						Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting
+						your
 						account, please download any data or information that you wish to retain.
 					</span>
 				</div>
 
-				<o-field>
-					<o-button variant="danger" label="Delete Account" nativeType="submit" />
-				</o-field>
+				<b-field>
+					<b-button type="is-danger" label="Delete Account" native-type="submit" />
+				</b-field>
 			</form>
 		</div>
 	</div>

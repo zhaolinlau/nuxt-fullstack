@@ -8,12 +8,9 @@ dependencies:
   '@mdi/font':
     specifier: ^7.4.47
     version: 7.4.47
-  '@oruga-ui/oruga-next':
-    specifier: 0.8.5
-    version: 0.8.5(vue@3.4.21)
-  '@oruga-ui/theme-bulma':
-    specifier: ^0.3.0
-    version: 0.3.0
+  '@ntohq/buefy-next':
+    specifier: ^0.1.2
+    version: 0.1.2(vue@3.4.21)
 
 devDependencies:
   '@nuxtjs/supabase':
@@ -337,6 +334,13 @@ packages:
       '@babel/helper-plugin-utils': 7.24.0
       '@babel/plugin-syntax-typescript': 7.23.3(@babel/core@7.24.0)
     dev: true
+
+  /@babel/runtime@7.18.9:
+    resolution: {integrity: sha512-lkqXDcvlFT5rvEjiu6+QYO+1GXrEHRo2LOtS7E4GtX5ESIZOgepqsZBVIj6Pv+a6zqsya9VCgiK1KAK4BvJDAw==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      regenerator-runtime: 0.13.11
+    dev: false
 
   /@babel/standalone@7.24.0:
     resolution: {integrity: sha512-yIZ/X3EAASgX/MW1Bn8iZKxCwixgYJAUaIScoZ9C6Gapw5l3eKIbtVSgO/IGldQed9QXm22yurKVWyWj5/j+SQ==}
@@ -1016,6 +1020,17 @@ packages:
       - supports-color
     dev: true
 
+  /@ntohq/buefy-next@0.1.2(vue@3.4.21):
+    resolution: {integrity: sha512-CrPNKDC9aqFEk2rAmIk0sLPwXOnfPCx9Vi/QzU1shxYoDUox+7FOBFzv+TCLkuS3HQHkK5qESN6O1CfMx8BMyw==}
+    engines: {node: '>= 4.0.0', npm: '>= 3.0.0'}
+    peerDependencies:
+      vue: ^3.0.0
+    dependencies:
+      '@babel/runtime': 7.18.9
+      bulma: 0.9.4
+      vue: 3.4.21
+    dev: false
+
   /@nuxt/devalue@2.0.2:
     resolution: {integrity: sha512-GBzP8zOc7CGWyFQS6dv1lQz8VVpz5C2yRszbXufwG/9zhStTIH50EtD87NmWbTMwXDvZLNg8GIpb1UFdH93JCA==}
     dev: true
@@ -1255,20 +1270,6 @@ packages:
       - supports-color
       - utf-8-validate
     dev: true
-
-  /@oruga-ui/oruga-next@0.8.5(vue@3.4.21):
-    resolution: {integrity: sha512-HnODRTrurmke7O5rRNdrbqYuNIdMrnBJ+P3jh6J7/Lk/zgMnpsObSGj/6JfQRvdf5Wq++Ch5yVUys0V4Lm08JQ==}
-    peerDependencies:
-      vue: ^3.0.0
-    dependencies:
-      vue: 3.4.21
-    dev: false
-
-  /@oruga-ui/theme-bulma@0.3.0:
-    resolution: {integrity: sha512-lkTsrdQJ6L5s/SACVtnjo51Tx/jIR+Dz2CgLAbLEooTE0tTiQPiQhkgXqEqLX8a78Kxp7kJa5d7YypGGxiJPjg==}
-    dependencies:
-      bulma: 0.9.4
-    dev: false
 
   /@parcel/watcher-android-arm64@2.4.1:
     resolution: {integrity: sha512-LOi/WTbbh3aTn2RYddrO8pnapixAziFl6SMxHM69r3tvdSm94JtCenaKgk1GRg5FJ5wpMCpHeW+7yqPlvZv7kg==}
@@ -5181,6 +5182,10 @@ packages:
     dependencies:
       redis-errors: 1.2.0
     dev: true
+
+  /regenerator-runtime@0.13.11:
+    resolution: {integrity: sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==}
+    dev: false
 
   /require-directory@2.1.1:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}

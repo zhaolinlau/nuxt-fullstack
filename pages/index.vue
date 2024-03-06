@@ -36,10 +36,6 @@ const addTask = async () => {
 		addSuccess.value = ''
 	} finally {
 		adding.value = false
-		setTimeout(() => {
-			addSuccess.value = ''
-			addError.value = ''
-		}, 3000)
 	}
 }
 
@@ -133,58 +129,59 @@ const completedTasks = computed(() => {
 <template>
 	<div class="columns is-multiline">
 		<div class="column is-12">
-			<o-button label="New Task" variant="primary" @click="showTaskForm = true" />
-			<o-modal v-model:active="showTaskForm">
+			<b-button label="New Task" type="is-primary" @click="showTaskForm = true" />
+			<b-modal v-model="showTaskForm">
 				<form class="box" @submit.prevent="addTask">
 
-					<o-notification variant="danger" class="is-light" :message="addError" v-if="addError" closable />
+					<b-notification type="is-danger is-light" :message="addError" v-if="addError" closable />
 
-					<o-field label="Task Title">
-						<o-input v-model="title" required />
-					</o-field>
+					<b-field label="Task Title">
+						<b-input v-model="title" required />
+					</b-field>
 
-					<o-field label="Task Details">
-						<o-input v-model="details" type="textarea" />
-					</o-field>
+					<b-field label="Task Details">
+						<b-input v-model="details" type="textarea" />
+					</b-field>
 
-					<o-field>
-						<o-button expanded label="Add Task" variant="primary" :loading="adding" nativeType="submit" />
-						<o-button variant="danger" expanded label="Close" @click="showTaskForm = false" />
-					</o-field>
+					<b-field>
+						<b-button expanded label="Add Task" type="is-primary" :loading="adding" native-type="submit" />
+						<b-button type="is-danger" expanded label="Close" @click="showTaskForm = false" />
+					</b-field>
 				</form>
-			</o-modal>
+			</b-modal>
 		</div>
 
 		<div class="column is-12" v-if="addSuccess">
-			<o-notification variant="success" class="is-light" :message="addSuccess" closable />
+			<b-notification variant="success" class="is-light" :message="addSuccess" closable />
 		</div>
 
 		<div class="column is-12">
 			<p class="title">Incomplete</p>
 		</div>
 		<div class="column is-12" v-if="pending">
-			<o-skeleton width="25%" :count="2" />
-			<o-skeleton width="75%" :count="3" />
+			<b-skeleton width="25%" :count="2" />
+			<b-skeleton width="75%" :count="3" />
 		</div>
 		<template v-else>
 			<template v-if="incompleteTasks">
-				<div class="column is-12" v-for="task in incompleteTasks">
+				<div class="column is-12" v-for="task in  incompleteTasks ">
 					<form class="card" @submit.prevent="updateTask(task)">
 						<div class="card-header">
 							<div class="card-header-title">
-								<o-input v-model="task.title" :class="{ 'is-static': !task.editable }" required
+								<b-input v-model="task.title" :class="{ 'is-static': !task.editable }" required
 									:readonly="!task.editable" />
 							</div>
 						</div>
 						<div class="card-content" v-if="task.details || task.editable">
-							<o-input type="textarea" v-model="task.details" :class="{ 'is-static has-fixed-size': !task.editable }"
-								:readonly="!task.editable" />
+							<b-input :type="task.editable ? 'textarea' : 'text'" v-model="task.details"
+								:class="{ 'is-static has-fixed-size': !task.editable }" :readonly="!task.editable" />
 						</div>
 						<div class="card-footer">
-							<o-button variant="link" class="card-footer-item"
-								@click="task.editable ? confirmTask(task) : editTask(task)" :label="task.editable ? 'Confirm' : 'Edit'" />
-							<o-button variant="success" class="card-footer-item" @click="completeTask(task)" label="Complete" />
-							<o-button variant="danger" class="card-footer-item" @click="deleteTask(task)" label="Remove" />
+							<b-button type="is-link" class="card-footer-item"
+								@click="task.editable ? confirmTask(task) : editTask(task)"
+								:label="task.editable ? 'Confirm' : 'Edit'" />
+							<b-button type="is-success" class="card-footer-item" @click="completeTask(task)" label="Complete" />
+							<b-button type="is-danger" class="card-footer-item" @click="deleteTask(task)" label="Remove" />
 						</div>
 					</form>
 				</div>
@@ -198,23 +195,24 @@ const completedTasks = computed(() => {
 			<p class="title">Completed</p>
 		</div>
 		<div class="column is-12" v-if="pending">
-			<o-skeleton width="25%" :count="2" />
-			<o-skeleton width="75%" :count="3" />
+			<b-skeleton width="25%" :count="2" />
+			<b-skeleton width="75%" :count="3" />
 		</div>
+
 		<template v-else>
 			<template v-if="completedTasks">
-				<div class="column is-12" v-for="task in completedTasks">
+				<div class="column is-12" v-for=" task  in  completedTasks ">
 					<div class="card">
 						<div class="card-header">
 							<div class="card-header-title">
-								<o-input class="is-static" v-model="task.title" required readonly />
+								<b-input class="is-static" v-model="task.title" required readonly />
 							</div>
 						</div>
 						<div class="card-content" v-if="task.details">
-							<o-input type="textarea" class="is-static has-fixed-size" v-model="task.details" readonly />
+							<b-input :type="task.editable ? 'textarea' : 'text'" :class="{ 'is-static has-fixed-size': !task.editable }" v-model="task.details" readonly />
 						</div>
 						<div class="card-footer">
-							<o-button variant="danger" class="card-footer-item" @click="deleteTask(task)" label="Remove" />
+							<b-button type="is-danger" class="card-footer-item" @click="deleteTask(task)" label="Remove" />
 						</div>
 					</div>
 				</div>

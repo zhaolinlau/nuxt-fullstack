@@ -9,7 +9,7 @@ export default defineNuxtConfig({
 			siteURL: process.env.NUXT_PUBLIC_SITE_URL,
 		},
 	},
-	plugins: ["plugins/oruga"],
+	plugins: ["plugins/buefy.js"],
 	modules: ["@nuxtjs/supabase", "nuxt-security"],
 	supabase: {
 		redirectOptions: {

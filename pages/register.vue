@@ -43,10 +43,6 @@ const register = async () => {
 		registerSuccess.value = ''
 	} finally {
 		registering.value = false
-		setTimeout(() => {
-			registerSuccess.value = ''
-			registerError.value = ''
-		}, 3000);
 	}
 }
 </script>
@@ -58,25 +54,25 @@ const register = async () => {
 				<p class="title has-text-centered">
 					Create account
 				</p>
-				<o-notification variant="success" class="is-light" :message="registerSuccess" v-if="registerSuccess" closable />
+				<b-notification type="is-success is-light" :message="registerSuccess" v-if="registerSuccess" closable />
 
-				<o-notification variant="danger" class="is-light" :message="registerError" v-if="registerError" closable />
+				<b-notification type="is-danger is-light" :message="registerError" v-if="registerError" closable />
 
-				<o-field label="Email">
-					<o-input icon="email" v-model="email" type="email" required />
-				</o-field>
+				<b-field label="Email">
+					<b-input icon="email" v-model="email" type="email" required />
+				</b-field>
 
-				<o-field label="Password">
-					<o-input icon="lock" passwordReveal type="password" v-model="password" minlength="6" required />
-				</o-field>
+				<b-field label="Password">
+					<b-input icon="lock" password-reveal type="password" v-model="password" minlength="6" required />
+				</b-field>
 
-				<o-field>
-					<o-button variant="primary" rounded expanded :loading="registering" label="Register" nativeType="submit" />
-				</o-field>
+				<b-field>
+					<b-button type="is-primary" rounded expanded :loading="registering" label="Register" native-type="submit" />
+				</b-field>
 
-				<o-field>
-					<o-button variant="link" rounded expanded @click="navigateTo('/login')" label="Back to login" />
-				</o-field>
+				<b-field>
+					<b-button type="is-link" rounded expanded @click="navigateTo('/login')" label="Back to login" />
+				</b-field>
 			</form>
 		</div>
 	</div>

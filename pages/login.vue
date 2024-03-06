@@ -28,11 +28,7 @@ const login = async () => {
 			await navigateTo('/confirm')
 		}
 	} catch (error) {
-		loggingIn.value = false
 		loginError.value = error.message
-		setTimeout(() => {
-			loginError.value = ''
-		}, 3000)
 	}
 }
 
@@ -49,11 +45,7 @@ const googleLogin = async () => {
 			throw error
 		}
 	} catch (error) {
-		loggingIn.value = false
 		loginError.value = error.message
-		setTimeout(() => {
-			loginError.value = ''
-		}, 3000)
 	}
 }
 
@@ -70,11 +62,7 @@ const twitterLogin = async () => {
 			throw error
 		}
 	} catch (error) {
-		loggingIn.value = false
 		loginError.value = error.message
-		setTimeout(() => {
-			loginError.value = ''
-		}, 3000)
 	}
 }
 
@@ -93,9 +81,6 @@ const facebookLogin = async () => {
 	} catch (error) {
 		loggingIn.value = false
 		loginError.value = error.message
-		setTimeout(() => {
-			loginError.value = ''
-		}, 3000)
 	}
 }
 
@@ -113,11 +98,7 @@ const azureLogin = async () => {
 			throw error
 		}
 	} catch (error) {
-		loggingIn.value = false
 		loginError.value = error.message
-		setTimeout(() => {
-			loginError.value = ''
-		}, 3000)
 	}
 }
 </script>
@@ -131,23 +112,23 @@ const azureLogin = async () => {
 					Login
 				</p>
 
-				<o-notification :message="loginError" variant="danger" class="is-light" v-if="loginError" closable />
+				<b-notification :message="loginError" type="is-danger is-light" v-if="loginError" closable />
 
 				<div class="columns is-centered is-mobile">
 					<div class="column">
-						<o-button expanded iconLeft="google" @click="googleLogin" />
+						<b-button expanded icon-left="google" @click="googleLogin" />
 					</div>
 
 					<div class="column">
-						<o-button expanded iconLeft="facebook" @click="facebookLogin" />
+						<b-button expanded icon-left="facebook" @click="facebookLogin" />
 					</div>
 
 					<div class="column">
-						<o-button expanded iconLeft="microsoft" @click="azureLogin" />
+						<b-button expanded icon-left="microsoft" @click="azureLogin" />
 					</div>
 
 					<div class="column">
-						<o-button expanded iconLeft="twitter" @click="twitterLogin" />
+						<b-button expanded icon-left="twitter" @click="twitterLogin" />
 					</div>
 				</div>
 
@@ -155,26 +136,26 @@ const azureLogin = async () => {
 
 				<form @submit.prevent="login">
 
-					<o-field label="Email">
-						<o-input icon="email" type="email" v-model="email" required />
-					</o-field>
+					<b-field label="Email">
+						<b-input icon="email" type="email" v-model="email" required />
+					</b-field>
 
-					<o-field label="Password">
-						<o-input icon="lock" type="password" minlength="6" passwordReveal v-model="password" required />
-					</o-field>
+					<b-field label="Password">
+						<b-input icon="lock" type="password" minlength="6" password-reveal v-model="password" required />
+					</b-field>
 
-					<o-field class="has-text-right">
+					<b-field class="has-text-right">
 						<NuxtLink to="/forgot_password">Forgot password?</NuxtLink>
-					</o-field>
+					</b-field>
 
-					<o-field>
-						<o-button rounded variant="primary" :disabled="loggingIn" expanded :loading="loggingIn" label="Login"
-							nativeType="submit" />
-					</o-field>
+					<b-field>
+						<b-button rounded type="is-primary" :disabled="loggingIn" expanded :loading="loggingIn" label="Login"
+							native-type="submit" />
+					</b-field>
 
-					<o-field>
-						<o-button rounded variant="link" expanded @click="navigateTo('/register')" label="Create account" />
-					</o-field>
+					<b-field>
+						<b-button rounded type="is-link" expanded @click="navigateTo('/register')" label="Create account" />
+					</b-field>
 				</form>
 			</div>
 		</div>
