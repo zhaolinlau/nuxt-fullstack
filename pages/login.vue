@@ -116,19 +116,27 @@ const azureLogin = async () => {
 
 				<div class="columns is-centered is-mobile">
 					<div class="column">
-						<b-button expanded icon-left="google" @click="googleLogin" />
+						<b-button expanded @click="googleLogin">
+							<b-icon pack="mdi" icon="google" />
+						</b-button>
 					</div>
 
 					<div class="column">
-						<b-button expanded icon-left="facebook" @click="facebookLogin" />
+						<b-button expanded @click="facebookLogin">
+							<b-icon pack="mdi" icon="facebook" />
+						</b-button>
 					</div>
 
 					<div class="column">
-						<b-button expanded icon-left="microsoft" @click="azureLogin" />
+						<b-button expanded @click="azureLogin">
+							<b-icon pack="mdi" icon="google" />
+						</b-button>
 					</div>
 
 					<div class="column">
-						<b-button expanded icon-left="twitter" @click="twitterLogin" />
+						<b-button expanded @click="twitterLogin">
+							<b-icon pack="mdi" icon="twitter" />
+						</b-button>
 					</div>
 				</div>
 
