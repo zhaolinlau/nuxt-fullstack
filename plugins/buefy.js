@@ -1,5 +1,5 @@
 import Buefy from '@ntohq/buefy-next';
-import '@ntohq/buefy-next/dist/buefy.css';
+import '@/assets/custom.scss';
 import '@mdi/font/css/materialdesignicons.css'
 
 export default defineNuxtPlugin(nuxtApp => {
