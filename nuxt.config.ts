@@ -1,9 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 	devtools: { enabled: true },
-	typescript: {
-		shim: false,
-	},
 	runtimeConfig: {
 		public: {
 			siteURL: process.env.NUXT_PUBLIC_SITE_URL,
