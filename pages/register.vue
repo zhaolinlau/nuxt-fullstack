@@ -45,6 +45,12 @@ const register = async () => {
 		registering.value = false
 	}
 }
+const emailInput = ref()
+const passwordInput = ref()
+const onSubmit = async () => {
+	await emailInput.value.checkHtml5Validity()
+	await passwordInput.value.checkHtml5Validity()
+}
 </script>
 
 <template>
@@ -59,15 +65,17 @@ const register = async () => {
 				<b-notification type="is-danger is-light" :message="registerError" v-if="registerError" closable />
 
 				<b-field label="Email">
-					<b-input icon="email" v-model="email" type="email" required />
+					<b-input icon="email" v-model="email" ref="emailInput" type="email" required />
 				</b-field>
 
 				<b-field label="Password">
-					<b-input icon="lock" password-reveal type="password" v-model="password" minlength="6" required />
+					<b-input icon="lock" password-reveal type="password" ref="passwordInput" v-model="password" minlength="6"
+						required />
 				</b-field>
 
 				<b-field>
-					<b-button type="is-primary" rounded expanded :loading="registering" label="Register" native-type="submit" />
+					<b-button type="is-primary" @click="onSubmit" rounded expanded :loading="registering" label="Register"
+						native-type="submit" />
 				</b-field>
 
 				<b-field>

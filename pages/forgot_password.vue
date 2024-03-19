@@ -38,6 +38,11 @@ const sendOTPLink = async () => {
 		sending.value = false
 	}
 }
+
+const emailInput = ref()
+const onSubmit = async () => {
+	await emailInput.value.checkHtml5Validity()
+}
 </script>
 
 <template>
@@ -53,11 +58,11 @@ const sendOTPLink = async () => {
 				<b-notification type="is-danger is-light" :message="sendError" v-if="sendError" closable />
 
 				<b-field label="Email">
-					<b-input icon="email" v-model="email" type="email" required />
+					<b-input icon="email" ref="emailInput" v-model="email" type="email" required />
 				</b-field>
 
 				<b-field>
-					<b-button rounded type="is-primary" expanded :loading="sending" native-type="submit" label="Send" />
+					<b-button rounded type="is-primary" @click="onSubmit" expanded :loading="sending" native-type="submit" label="Send" />
 				</b-field>
 
 				<b-field>

@@ -101,6 +101,13 @@ const azureLogin = async () => {
 		loginError.value = error.message
 	}
 }
+
+const emailInput = ref()
+const passwordInput = ref()
+const onSubmit = async () => {
+	await emailInput.value.checkHtml5Validity()
+	await passwordInput.value.checkHtml5Validity()
+}
 </script>
 
 <template>
@@ -145,11 +152,11 @@ const azureLogin = async () => {
 				<form @submit.prevent="login">
 
 					<b-field label="Email">
-						<b-input icon="email" type="email" v-model="email" required />
+						<b-input icon="email" ref="emailInput" type="email" v-model="email" required />
 					</b-field>
 
 					<b-field label="Password">
-						<b-input icon="lock" type="password" minlength="6" password-reveal v-model="password" required />
+						<b-input icon="lock" ref="passwordInput" type="password" minlength="6" password-reveal v-model="password" required />
 					</b-field>
 
 					<b-field class="has-text-right">
@@ -157,7 +164,7 @@ const azureLogin = async () => {
 					</b-field>
 
 					<b-field>
-						<b-button rounded type="is-primary" :disabled="loggingIn" expanded :loading="loggingIn" label="Login"
+						<b-button rounded type="is-primary" @click="onSubmit" :disabled="loggingIn" expanded :loading="loggingIn" label="Login"
 							native-type="submit" />
 					</b-field>
 
