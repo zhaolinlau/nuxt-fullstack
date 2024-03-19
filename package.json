@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "@nuxtjs/supabase": "^1.1.7",
-    "nuxt": "^3.10.3",
+    "nuxt": "^3.11.1",
     "nuxt-security": "^1.2.2",
     "sass": "^1.71.1",
     "vue": "^3.4.21",
