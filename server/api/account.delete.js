@@ -6,7 +6,7 @@ import {
 export default defineEventHandler(async (event) => {
 	const serviceRole = serverSupabaseServiceRole(event);
 	const user = await serverSupabaseUser(event);
-	const { error } = await serviceRole.auth.admin.deleteUser(user.id);
+	const { error } = await serviceRole.auth.admin.deleteUser(user.id, true);
 
 	if (error) {
 		throw createError({
