@@ -136,7 +136,7 @@ const onSubmit = async () => {
 
 					<div class="column">
 						<b-button expanded @click="azureLogin">
-							<b-icon pack="mdi" icon="google" />
+							<b-icon pack="mdi" icon="microsoft" />
 						</b-button>
 					</div>
 
