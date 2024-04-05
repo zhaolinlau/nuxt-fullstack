@@ -152,7 +152,7 @@ const completedTasks = computed(() => {
 		</div>
 
 		<div class="column is-12" v-if="addSuccess">
-			<b-notification variant="success" class="is-light" :message="addSuccess" closable />
+			<b-notification type="is-success is-light" :message="addSuccess" />
 		</div>
 
 		<div class="column is-12">
