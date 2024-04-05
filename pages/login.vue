@@ -28,6 +28,7 @@ const login = async () => {
 			await navigateTo('/confirm')
 		}
 	} catch (error) {
+		loggingIn.value = false
 		loginError.value = error.message
 	}
 }
