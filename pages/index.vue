@@ -15,6 +15,9 @@ const title = ref('')
 const details = ref('')
 const showTaskForm = ref(false)
 const edit = ref(false)
+const showDetailsModal = ref(false)
+const detailsInModal = ref('')
+const titleInModal = ref('')
 
 const addTask = async () => {
 	try {
@@ -124,9 +127,30 @@ const completedTasks = computed(() => {
 		return tasks.value.filter((task) => task.completed)
 	}
 })
+
+const DetailsModal = async (task) => {
+	showDetailsModal.value = true
+	titleInModal.value = task.title
+	detailsInModal.value = task.details
+}
 </script>
 
 <template>
+	<b-modal has-modal-card v-model="showDetailsModal">
+		<div class="modal-card">
+			<div class="modal-card-head">
+				<p class="modal-card-title">{{ titleInModal }}</p>
+				<button class="delete" aria-label="close" @click="showDetailsModal = false"></button>
+			</div>
+			<div class="modal-card-body has-text-justified">
+				{{ detailsInModal }}
+			</div>
+			<div class="modal-card-foot">
+				<b-button type="is-danger" @click="showDetailsModal = false">Cancel</b-button>
+			</div>
+		</div>
+	</b-modal>
+
 	<div class="columns is-multiline">
 		<div class="column is-12">
 			<b-button label="New Task" type="is-primary" @click="showTaskForm = true" />
@@ -164,24 +188,35 @@ const completedTasks = computed(() => {
 		</div>
 		<template v-else>
 			<template v-if="incompleteTasks">
-				<div class="column is-12" v-for="task in  incompleteTasks ">
+				<div class="column is-12" v-for="task in incompleteTasks ">
 					<form class="card" @submit.prevent="updateTask(task)">
 						<div class="card-header">
 							<div class="card-header-title">
-								<b-input v-model="task.title" :class="{ 'is-static': !task.editable }" required
-									:readonly="!task.editable" />
+								<template v-if="task.editable">
+									<b-input v-model="task.title" required />
+								</template>
+								<template v-else>
+									{{ task.title }}
+								</template>
 							</div>
 						</div>
 						<div class="card-content" v-if="task.details || task.editable">
-							<b-input :type="task.editable ? 'textarea' : 'text'" v-model="task.details"
-								:class="{ 'is-static has-fixed-size': !task.editable }" :readonly="!task.editable" />
+							<template v-if="task.editable">
+								<b-input type="textarea" v-model="task.details" />
+							</template>
+							<template v-else>
+								<b-button type="is-info" label="View Details" @click="DetailsModal(task)" />
+							</template>
 						</div>
 						<div class="card-footer">
 							<b-button type="is-link" class="card-footer-item"
 								@click="task.editable ? confirmTask(task) : editTask(task)"
 								:label="task.editable ? 'Confirm' : 'Edit'" />
-							<b-button type="is-success" class="card-footer-item" @click="completeTask(task)" label="Complete" />
-							<b-button type="is-danger" class="card-footer-item" @click="deleteTask(task)" label="Remove" />
+							<b-button type="is-success" class="card-footer-item" @click="completeTask(task)" label="Complete"
+								v-if="!task.editable" />
+							<b-button type="is-danger" class="card-footer-item"
+								@click="task.editable ? task.editable = false : deleteTask(task)"
+								:label="task.editable ? 'Cancel' : 'Remove'" />
 						</div>
 					</form>
 				</div>
@@ -201,15 +236,15 @@ const completedTasks = computed(() => {
 
 		<template v-else>
 			<template v-if="completedTasks">
-				<div class="column is-12" v-for=" task  in  completedTasks ">
+				<div class="column is-12" v-for=" task in completedTasks ">
 					<div class="card">
 						<div class="card-header">
 							<div class="card-header-title">
-								<b-input class="is-static" v-model="task.title" required readonly />
+								{{ task.title }}
 							</div>
 						</div>
 						<div class="card-content" v-if="task.details">
-							<b-input :type="task.editable ? 'textarea' : 'text'" :class="{ 'is-static has-fixed-size': !task.editable }" v-model="task.details" readonly />
+							<b-button type="is-info" label="View Details" @click="DetailsModal(task)" />
 						</div>
 						<div class="card-footer">
 							<b-button type="is-danger" class="card-footer-item" @click="deleteTask(task)" label="Remove" />
