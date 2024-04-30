@@ -1,77 +1,3 @@
-<script setup>
-useHead({
-	title: 'To-dos | Profile'
-})
-
-definePageMeta({
-	middleware: 'auth'
-})
-const loggingOut = ref(false)
-const client = useSupabaseClient()
-const user = useSupabaseUser()
-const new_email = ref('')
-const new_password = ref('')
-const changeEmailError = ref('')
-const changeEmailSuccess = ref('')
-const changePasswordError = ref('')
-const changePasswordSuccess = ref('')
-
-const changeEmail = async () => {
-	try {
-		const { error } = await client.auth.updateUser({
-			email: new_email.value
-		})
-		if (error) {
-			throw error
-		} else {
-			changeEmailSuccess.value = "Please check your email, we have sent a confirmation link."
-			new_email.value = ''
-			changeEmailError.value = ''
-		}
-	} catch (error) {
-		changeEmailError.value = error.message
-		changeEmailSuccess.value = ''
-	}
-}
-
-const changePassword = async () => {
-	try {
-		const { error } = await client.auth.updateUser({
-			password: new_password.value
-		})
-		if (error) {
-			throw error
-		} else {
-			changePasswordSuccess.value = "Your password has been updated."
-			new_password.value = ''
-			changePasswordError.value = ''
-		}
-	} catch (error) {
-		changePasswordSuccess.value = ''
-		changePasswordError.value = error.message
-	}
-}
-
-const deleteAccount = async () => {
-	try {
-		loggingOut.value = true
-		await $fetch('/api/account', {
-			method: 'delete'
-		})
-		const { error } = await client.auth.signOut()
-		if (error) {
-			throw error
-		} else {
-			await refreshNuxtData()
-			await navigateTo('/login')
-		}
-	} catch (error) {
-		loggingOut.value = false
-		showError(error.message)
-	}
-}
-</script>
-
 <template>
 	<b-loading v-model="loggingOut" />
 	<div class="columns is-multiline">
@@ -146,3 +72,74 @@ const deleteAccount = async () => {
 		</div>
 	</div>
 </template>
+
+<script setup>
+useHead({
+	title: 'To-dos | Profile'
+})
+
+const loggingOut = ref(false)
+const client = useSupabaseClient()
+const user = useSupabaseUser()
+const new_email = ref('')
+const new_password = ref('')
+const changeEmailError = ref('')
+const changeEmailSuccess = ref('')
+const changePasswordError = ref('')
+const changePasswordSuccess = ref('')
+
+const changeEmail = async () => {
+	try {
+		const { error } = await client.auth.updateUser({
+			email: new_email.value
+		})
+		if (error) {
+			throw error
+		} else {
+			changeEmailSuccess.value = "Please check your email, we have sent a confirmation link."
+			new_email.value = ''
+			changeEmailError.value = ''
+		}
+	} catch (error) {
+		changeEmailError.value = error.message
+		changeEmailSuccess.value = ''
+	}
+}
+
+const changePassword = async () => {
+	try {
+		const { error } = await client.auth.updateUser({
+			password: new_password.value
+		})
+		if (error) {
+			throw error
+		} else {
+			changePasswordSuccess.value = "Your password has been updated."
+			new_password.value = ''
+			changePasswordError.value = ''
+		}
+	} catch (error) {
+		changePasswordSuccess.value = ''
+		changePasswordError.value = error.message
+	}
+}
+
+const deleteAccount = async () => {
+	try {
+		loggingOut.value = true
+		await $fetch('/api/account', {
+			method: 'delete'
+		})
+		const { error } = await client.auth.signOut()
+		if (error) {
+			throw error
+		} else {
+			await refreshNuxtData()
+			await navigateTo('/login')
+		}
+	} catch (error) {
+		loggingOut.value = false
+		showError(error.message)
+	}
+}
+</script>

@@ -14,5 +14,5 @@ export default defineNuxtConfig({
 			callback: "/confirm",
 			exclude: ["/register", "/forgot_password"],
 		},
-	},
-});
+	}
+})

@@ -1,25 +1,3 @@
-<script setup>
-const client = useSupabaseClient()
-const user = useSupabaseUser()
-const loggingOut = ref(false)
-
-const logout = async () => {
-	try {
-		loggingOut.value = true
-		const { error } = await client.auth.signOut();
-		if (error) {
-			throw error
-		} else {
-			await refreshNuxtData()
-			await navigateTo('/login')
-		}
-	} catch (error) {
-		loggingOut.value = false
-		showError(error.message)
-	}
-}
-</script>
-
 <template>
 	<b-loading v-model="loggingOut" />
 
@@ -44,3 +22,25 @@ const logout = async () => {
 
 	</b-navbar>
 </template>
+
+<script setup>
+const client = useSupabaseClient()
+const user = useSupabaseUser()
+const loggingOut = ref(false)
+
+const logout = async () => {
+	try {
+		loggingOut.value = true
+		const { error } = await client.auth.signOut();
+		if (error) {
+			throw error
+		} else {
+			await refreshNuxtData()
+			await navigateTo('/login')
+		}
+	} catch (error) {
+		loggingOut.value = false
+		showError(error.message)
+	}
+}
+</script>

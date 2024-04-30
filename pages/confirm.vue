@@ -1,3 +1,9 @@
+<template>
+	<p class="has-text-centered title">
+		Redirecting...
+	</p>
+</template>
+
 <script setup>
 useHead({
 	title: 'To-dos | Redirecting...'
@@ -5,20 +11,15 @@ useHead({
 
 definePageMeta({
 	layout: 'guest',
-	middleware: 'auth'
 })
 
-const user = useSupabaseUser()
+const session = useSupabaseSession()
 
-watch(user, () => {
-	if (user.value) {
-		return navigateTo('/')
+watch(session, async () => {
+	if (session.value) {
+		await navigateTo('/')
+	} else {
+		await navigateTo('/login')
 	}
 }, { immediate: true })
 </script>
-
-<template>
-	<p class="has-text-centered title">
-		Logging in. . .
-	</p>
-</template>

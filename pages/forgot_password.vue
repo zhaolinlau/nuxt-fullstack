@@ -1,3 +1,32 @@
+<template>
+	<div class="columns is-centered">
+		<div class="column is-6-desktop is-12-touch">
+			<form class="box" @submit.prevent="sendOTPLink">
+				<p class="title has-text-centered">
+					One-time Password (OTP)
+				</p>
+
+				<b-notification type="is-success is-light" :message="sendSuccess" v-if="sendSuccess" closable />
+
+				<b-notification type="is-danger is-light" :message="sendError" v-if="sendError" closable />
+
+				<b-field label="Email">
+					<b-input icon="email" ref="emailInput" v-model="email" type="email" required />
+				</b-field>
+
+				<b-field>
+					<b-button rounded type="is-primary" @click="onSubmit" expanded :loading="sending" native-type="submit"
+						label="Send" />
+				</b-field>
+
+				<b-field>
+					<b-button rounded type="is-link" expanded @click="navigateTo('/login')" label="Back to login" />
+				</b-field>
+			</form>
+		</div>
+	</div>
+</template>
+
 <script setup>
 useHead({
 	title: 'To-dos | Forgot Password'
@@ -5,8 +34,9 @@ useHead({
 
 definePageMeta({
 	layout: 'guest',
-	middleware: 'guest'
+	middleware: 'auth'
 })
+
 const client = useSupabaseClient()
 const email = ref('')
 const sending = ref(false)
@@ -44,31 +74,3 @@ const onSubmit = async () => {
 	await emailInput.value.checkHtml5Validity()
 }
 </script>
-
-<template>
-	<div class="columns is-centered">
-		<div class="column is-6-desktop is-12-touch">
-			<form class="box" @submit.prevent="sendOTPLink">
-				<p class="title has-text-centered">
-					One-time Password (OTP)
-				</p>
-
-				<b-notification type="is-success is-light" :message="sendSuccess" v-if="sendSuccess" closable />
-
-				<b-notification type="is-danger is-light" :message="sendError" v-if="sendError" closable />
-
-				<b-field label="Email">
-					<b-input icon="email" ref="emailInput" v-model="email" type="email" required />
-				</b-field>
-
-				<b-field>
-					<b-button rounded type="is-primary" @click="onSubmit" expanded :loading="sending" native-type="submit" label="Send" />
-				</b-field>
-
-				<b-field>
-					<b-button rounded type="is-link" expanded @click="navigateTo('/login')" label="Back to login" />
-				</b-field>
-			</form>
-		</div>
-	</div>
-</template>
