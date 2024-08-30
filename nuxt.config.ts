@@ -3,8 +3,8 @@ export default defineNuxtConfig({
 	devtools: { enabled: true },
 	runtimeConfig: {
 		public: {
-			siteURL: process.env.NUXT_PUBLIC_SITE_URL,
-		},
+			siteURL: process.env.NUXT_PUBLIC_SITE_URL
+		}
 	},
 	plugins: ["plugins/buefy.js"],
 	modules: ["@nuxtjs/supabase", "nuxt-security"],
@@ -12,7 +12,12 @@ export default defineNuxtConfig({
 		redirectOptions: {
 			login: "/login",
 			callback: "/confirm",
-			exclude: ["/register", "/forgot_password"],
-		},
+			exclude: ["/register", "/forgot_password"]
+		}
+	},
+	security: {
+		headers: {
+			crossOriginEmbedderPolicy: process.env.NODE_ENV === 'development' ? 'unsafe-none' : 'credentialless'
+		}
 	}
 })
