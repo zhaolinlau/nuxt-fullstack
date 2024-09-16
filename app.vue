@@ -8,7 +8,7 @@ useHead({
 	<NuxtRouteAnnouncer />
 	<NuxtLoadingIndicator />
 	<UNotifications />
-	<NuxtLayout class="bg-slate-900">
+	<NuxtLayout class="dark:bg-slate-900">
 		<UContainer>
 			<NuxtPage />
 		</UContainer>
