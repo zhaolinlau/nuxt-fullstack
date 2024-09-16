@@ -14,7 +14,7 @@
     "@ntohq/buefy-next": "^0.1.4",
     "@nuxtjs/supabase": "^1.4.0",
     "bulma": "0.9.4",
-    "nuxt": "^3.13.0",
+    "nuxt": "^3.13.2",
     "nuxt-security": "2.0.0-rc.9",
     "sass": "^1.77.8",
     "vue": "^3.4.38"
