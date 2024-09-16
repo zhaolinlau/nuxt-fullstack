@@ -6,8 +6,7 @@ export default defineNuxtConfig({
 			siteURL: process.env.NUXT_PUBLIC_SITE_URL
 		}
 	},
-	plugins: ["plugins/buefy.js"],
-	modules: ["@nuxtjs/supabase", "nuxt-security"],
+	modules: ['@nuxtjs/supabase', 'nuxt-security', '@nuxt/ui'],
 	supabase: {
 		redirectOptions: {
 			login: "/login",

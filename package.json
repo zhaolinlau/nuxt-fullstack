@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-app",
+  "name": "to-dos",
   "private": true,
   "type": "module",
   "scripts": {
@@ -10,13 +10,12 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@mdi/font": "^7.4.47",
-    "@ntohq/buefy-next": "^0.1.4",
+    "@nuxt/ui": "^2.18.4",
     "@nuxtjs/supabase": "^1.4.0",
-    "bulma": "0.9.4",
     "nuxt": "^3.13.2",
     "nuxt-security": "2.0.0-rc.9",
-    "sass": "^1.77.8",
-    "vue": "^3.4.38"
-  }
+    "vue": "^3.4.38",
+    "vue-router": "^4.4.5"
+  },
+  "packageManager": "pnpm@9.10.0+sha512.73a29afa36a0d092ece5271de5177ecbf8318d454ecd701343131b8ebc0c1a91c487da46ab77c8e596d6acf1461e3594ced4becedf8921b074fbd8653ed7051c"
 }
