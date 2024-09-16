@@ -1,12 +1,15 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 	devtools: { enabled: true },
+
 	runtimeConfig: {
 		public: {
 			siteURL: process.env.NUXT_PUBLIC_SITE_URL
 		}
 	},
+
 	modules: ['@nuxtjs/supabase', 'nuxt-security', '@nuxt/ui', '@nuxthub/core'],
+
 	supabase: {
 		redirectOptions: {
 			login: "/login",
@@ -22,9 +25,12 @@ export default defineNuxtConfig({
 			}
 		},
 	},
+
 	security: {
 		headers: {
 			crossOriginEmbedderPolicy: process.env.NUXT_HUB_ENV === 'development' ? 'unsafe-none' : 'credentialless'
 		}
-	}
+	},
+
+	compatibilityDate: '2024-09-16'
 })
