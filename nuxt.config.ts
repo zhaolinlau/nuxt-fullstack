@@ -13,7 +13,15 @@ export default defineNuxtConfig({
 			login: "/login",
 			callback: "/confirm",
 			exclude: ["/register", "/forgot_password"]
-		}
+		},
+		clientOptions: {
+			auth: {
+				flowType: 'pkce',
+				autoRefreshToken: true,
+				detectSessionInUrl: true,
+				persistSession: true
+			}
+		},
 	},
 	security: {
 		headers: {
