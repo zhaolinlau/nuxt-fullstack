@@ -6,7 +6,7 @@ export default defineNuxtConfig({
 			siteURL: process.env.NUXT_PUBLIC_SITE_URL
 		}
 	},
-	modules: ['@nuxtjs/supabase', 'nuxt-security', '@nuxt/ui'],
+	modules: ['@nuxtjs/supabase', 'nuxt-security', '@nuxt/ui', '@nuxthub/core'],
 	supabase: {
 		redirectOptions: {
 			login: "/login",
