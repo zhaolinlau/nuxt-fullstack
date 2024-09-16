@@ -43,7 +43,7 @@ const googleLogin = async () => {
 			icon: 'i-mdi-alert'
 		})
 	}
-	loggingIn.value = true
+	loggingIn.value = false
 }
 
 const twitterLogin = async () => {
@@ -62,7 +62,7 @@ const twitterLogin = async () => {
 			icon: 'i-mdi-alert'
 		})
 	}
-	loggingIn.value = true
+	loggingIn.value = false
 }
 
 const facebookLogin = async () => {
@@ -81,7 +81,7 @@ const facebookLogin = async () => {
 			icon: 'i-mdi-alert'
 		})
 	}
-	loggingIn.value = true
+	loggingIn.value = false
 }
 
 const azureLogin = async () => {
@@ -101,7 +101,7 @@ const azureLogin = async () => {
 			icon: 'i-mdi-alert'
 		})
 	}
-	loggingIn.value = true
+	loggingIn.value = false
 }
 </script>
 
