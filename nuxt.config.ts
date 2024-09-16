@@ -32,5 +32,15 @@ export default defineNuxtConfig({
 		}
 	},
 
+	app: {
+		head: {
+			meta: [
+				{
+					name: 'google-site-verification', content: process.env.GOOGLE_SITE_VERIFICATION
+				}
+			]
+		}
+	},
+
 	compatibilityDate: '2024-09-16'
 })
