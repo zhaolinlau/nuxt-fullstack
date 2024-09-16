@@ -107,11 +107,7 @@ const azureLogin = async () => {
 
 <template>
 	<UForm :state="state" @submit="login" class="border border-primary rounded-lg p-3">
-		<div class="prose dark:prose-invert mb-3">
-			<h1>
-				Sign in
-			</h1>
-		</div>
+		<p class="text-3xl mb-3 font-semibold">Sign in</p>
 
 		<UFormGroup label="Email" class="mb-3">
 			<UInput type="text" icon="i-mdi-email" v-model="state.email" :disabled="loggingIn" />
