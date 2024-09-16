@@ -114,11 +114,11 @@ const azureLogin = async () => {
 		</div>
 
 		<UFormGroup label="Email" class="mb-3">
-			<UInput type="text" v-model="state.email" :disabled="loggingIn" />
+			<UInput type="text" icon="i-mdi-email" v-model="state.email" :disabled="loggingIn" />
 		</UFormGroup>
 
 		<UFormGroup label="Password" class="mb-3">
-			<UInput type="password" v-model="state.password" :disabled="loggingIn" />
+			<UInput type="password" icon="i-mdi-lock" v-model="state.password" :disabled="loggingIn" />
 		</UFormGroup>
 
 		<div class="text-end mb-3">
@@ -127,10 +127,7 @@ const azureLogin = async () => {
 
 		<UButton type="submit" class="mb-3" :loading="loggingIn" label="Sign in" block />
 
-		<div
-			class="mb-3 text-sm flex items-center uppercase before:flex-1 before:border-t before:me-6 after:flex-1 after:border-t after:ms-6">
-			Or
-		</div>
+		<UDivider label="OR" class="mb-3" />
 
 		<div class="flex justify-center gap-5 mb-3">
 			<div>
