@@ -63,7 +63,7 @@ const socialLogin = async (provider) => {
 			<ULink to="/forgot_password" class="text-primary underline">Forgot password?</ULink>
 		</div>
 
-		<UButton type="submit" class="mb-3" :loading="loggingIn" label="Sign in" block />
+		<UButton type="submit" icon="i-mdi-login"class="mb-3" :loading="loggingIn" label="Sign in" block />
 
 		<UDivider label="OR" class="mb-3" />
 
