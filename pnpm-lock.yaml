@@ -26,6 +26,9 @@ importers:
       nuxt:
         specifier: ^3.13.2
         version: 3.13.2(@parcel/watcher@2.4.1)(@types/node@22.5.5)(ioredis@5.4.1)(magicast@0.3.5)(rollup@4.21.3)(terser@5.32.0)(vite@5.4.5(@types/node@22.5.5)(terser@5.32.0))
+      nuxt-delay-hydration:
+        specifier: ^1.3.8
+        version: 1.3.8(magicast@0.3.5)(rollup@4.21.3)
       nuxt-security:
         specifier: 2.0.0-rc.9
         version: 2.0.0-rc.9(magicast@0.3.5)(rollup@4.21.3)
@@ -2864,6 +2867,9 @@ packages:
     resolution: {integrity: sha512-ok6z3qlYyCDS4ZEU27HaU6x/xZa9Whf8jD4ptH5UZTQYZVYeb9bnZ3ojVhiJNLiXK1Hfc0GNbLXcmZ5plLDDBg==}
     engines: {node: '>=14'}
 
+  lodash-es@4.17.21:
+    resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
+
   lodash.castarray@4.4.0:
     resolution: {integrity: sha512-aVx8ztPv7/2ULbArGJ2Y42bG1mEQ5mGjpdvrbJcJFU3TbYybe+QlLS4pst9zV52ymy2in1KpFPiZnAOATxD4+Q==}
 
@@ -3159,6 +3165,9 @@ packages:
   nuxt-csurf@1.6.2:
     resolution: {integrity: sha512-GksV+0DrnEYzQGAPb/BzLgulITqQNi3p5LUOW+zIf2GqdshW7MKoS/EBeVLDBfeT0P0a0OvewzaEGt1/OGVtAQ==}
 
+  nuxt-delay-hydration@1.3.8:
+    resolution: {integrity: sha512-BlVj7venvdPAQxAw54oouho4pk744Bu23d/g1dRLruGNHSN3rM5sEPuc4yEvPpuCPLDq9JQhkpKld24NMxTrzw==}
+
   nuxt-security@2.0.0-rc.9:
     resolution: {integrity: sha512-kymOhnPcwhKj8g20GXgrFC6h7Oub7+53yqD0byovCDb50a3hlSRdSLlSBoP2/ca4dtnbu8FWJd5/KuUHBGHWXw==}
 
@@ -3259,6 +3268,9 @@ packages:
 
   package-manager-detector@0.2.0:
     resolution: {integrity: sha512-E385OSk9qDcXhcM9LNSe4sdhx8a9mAPrZ4sMLW+tmxl5ZuGtPUcdFu+MPP2jbgiWAZ6Pfe5soGFMd+0Db5Vrog==}
+
+  packrup@0.1.2:
+    resolution: {integrity: sha512-ZcKU7zrr5GlonoS9cxxrb5HVswGnyj6jQvwFBa6p5VFw7G71VAHcUKL5wyZSU/ECtPM/9gacWxy2KFQKt1gMNA==}
 
   parse-git-config@3.0.0:
     resolution: {integrity: sha512-wXoQGL1D+2COYWCD35/xbiKma1Z15xvZL8cI25wvxzled58V51SJM04Urt/uznS900iQor7QO04SgdfT/XlbuA==}
@@ -7628,6 +7640,8 @@ snapshots:
       mlly: 1.7.1
       pkg-types: 1.2.0
 
+  lodash-es@4.17.21: {}
+
   lodash.castarray@4.4.0: {}
 
   lodash.defaults@4.2.0: {}
@@ -7968,6 +7982,18 @@ snapshots:
       - supports-color
       - webpack-sources
 
+  nuxt-delay-hydration@1.3.8(magicast@0.3.5)(rollup@4.21.3):
+    dependencies:
+      '@nuxt/kit': 3.13.2(magicast@0.3.5)(rollup@4.21.3)
+      lodash-es: 4.17.21
+      packrup: 0.1.2
+      radix3: 1.1.2
+    transitivePeerDependencies:
+      - magicast
+      - rollup
+      - supports-color
+      - webpack-sources
+
   nuxt-security@2.0.0-rc.9(magicast@0.3.5)(rollup@4.21.3):
     dependencies:
       '@nuxt/kit': 3.13.2(magicast@0.3.5)(rollup@4.21.3)
@@ -8273,6 +8299,8 @@ snapshots:
       semver: 7.6.3
 
   package-manager-detector@0.2.0: {}
+
+  packrup@0.1.2: {}
 
   parse-git-config@3.0.0:
     dependencies:

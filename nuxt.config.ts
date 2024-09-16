@@ -8,7 +8,15 @@ export default defineNuxtConfig({
 		}
 	},
 
-	modules: ['@nuxtjs/supabase', 'nuxt-security', '@nuxt/ui', '@nuxthub/core', '@nuxt/image', '@nuxtjs/robots'],
+	modules: [
+		'@nuxtjs/supabase',
+		'nuxt-security',
+		'@nuxt/ui',
+		'@nuxthub/core',
+		'@nuxt/image',
+		'@nuxtjs/robots',
+		'nuxt-delay-hydration'
+	],
 
 	supabase: {
 		redirectOptions: {
@@ -40,6 +48,10 @@ export default defineNuxtConfig({
 				}
 			]
 		}
+	},
+
+	delayHydration: {
+		mode: 'mount'
 	},
 
 	compatibilityDate: '2024-09-16'
