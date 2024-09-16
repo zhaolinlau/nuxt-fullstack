@@ -39,7 +39,7 @@ const googleLogin = async () => {
 			title: 'Error',
 			description: error.message,
 			color: 'red',
-			icon: 'i-heroicons-x-mark'
+			icon: 'i-mdi-alert'
 		})
 	}
 	loggingIn.value = true
