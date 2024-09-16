@@ -1,6 +1,9 @@
 <script setup>
 useHead({
-	title: 'Taskori'
+	title: 'Taskori',
+	htmlAttrs: {
+		lang: 'en'
+	}
 })
 
 useSeoMeta({
