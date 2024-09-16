@@ -1,66 +1,3 @@
-<template>
-	<div class="p-3">
-		<p class="title has-text-centered">
-			Login
-		</p>
-
-		<b-notification :message="loginError" type="is-danger is-light" v-if="loginError" closable />
-
-		<div class="columns is-centered is-mobile">
-			<div class="column">
-				<b-button expanded @click="googleLogin">
-					<b-icon pack="mdi" icon="google" />
-				</b-button>
-			</div>
-
-			<div class="column">
-				<b-button expanded @click="facebookLogin">
-					<b-icon pack="mdi" icon="facebook" />
-				</b-button>
-			</div>
-
-			<div class="column">
-				<b-button expanded @click="azureLogin">
-					<b-icon pack="mdi" icon="microsoft" />
-				</b-button>
-			</div>
-
-			<div class="column">
-				<b-button expanded @click="twitterLogin">
-					<b-icon pack="mdi" icon="twitter" />
-				</b-button>
-			</div>
-		</div>
-
-		<hr>
-
-		<form @submit.prevent="login">
-
-			<b-field label="Email">
-				<b-input icon="email" ref="emailInput" type="email" v-model="email" required />
-			</b-field>
-
-			<b-field label="Password">
-				<b-input icon="lock" ref="passwordInput" type="password" minlength="6" password-reveal v-model="password"
-					required />
-			</b-field>
-
-			<b-field class="has-text-right">
-				<NuxtLink to="/forgot_password">Forgot password?</NuxtLink>
-			</b-field>
-
-			<b-field>
-				<b-button rounded type="is-primary" @click="onSubmit" :disabled="loggingIn" expanded :loading="loggingIn"
-					label="Login" native-type="submit" />
-			</b-field>
-
-			<b-field>
-				<b-button rounded type="is-link" expanded @click="navigateTo('/register')" label="Create account" />
-			</b-field>
-		</form>
-	</div>
-</template>
-
 <script setup>
 const client = useSupabaseClient()
 const email = ref('')
@@ -68,40 +5,44 @@ const password = ref('')
 const loginError = ref('')
 const loggingIn = ref(false)
 const runtimeConfig = useRuntimeConfig()
+const toast = useToast()
 
 const login = async () => {
-	try {
-		loggingIn.value = true
-		const { error } = await client.auth.signInWithPassword({
-			email: email.value,
-			password: password.value
+	loggingIn.value = true
+	const { error } = await client.auth.signInWithPassword({
+		email: email.value,
+		password: password.value
+	})
+	if (error) {
+		toast.add({
+			title: 'Error',
+			description: error.message,
+			color: 'red',
+			icon: 'i-heroicons-x-mark'
 		})
-		if (error) {
-			throw error
-		} else {
-			await navigateTo('/confirm')
-		}
-	} catch (error) {
-		loggingIn.value = false
-		loginError.value = error.message
+	} else {
+		await navigateTo('/confirm')
 	}
+	loggingIn.value = false
 }
 
 const googleLogin = async () => {
-	try {
-		loggingIn.value = true
-		const { error } = await client.auth.signInWithOAuth({
-			provider: 'google',
-			options: {
-				redirectTo: `${runtimeConfig.public.siteURL}/confirm`
-			}
-		})
-		if (error) {
-			throw error
+	loggingIn.value = true
+	const { error } = await client.auth.signInWithOAuth({
+		provider: 'google',
+		options: {
+			redirectTo: `${runtimeConfig.public.siteURL}/confirm`
 		}
-	} catch (error) {
-		loginError.value = error.message
+	})
+	if (error) {
+		toast.add({
+			title: 'Error',
+			description: error.message,
+			color: 'red',
+			icon: 'i-heroicons-x-mark'
+		})
 	}
+	loggingIn.value = true
 }
 
 const twitterLogin = async () => {
@@ -156,11 +97,46 @@ const azureLogin = async () => {
 		loginError.value = error.message
 	}
 }
-
-const emailInput = ref()
-const passwordInput = ref()
-const onSubmit = async () => {
-	await emailInput.value.checkHtml5Validity()
-	await passwordInput.value.checkHtml5Validity()
-}
 </script>
+
+<template>
+	<UForm @submit="login" class="border border-primary rounded-lg p-3">
+		<div class="grid grid-cols-4 justify-items-center">
+			<div>
+				<UButton icon="i-mdi-google" @click="googleLogin" />
+			</div>
+
+			<div>
+				<UButton icon="i-mdi-facebook" @click="facebookLogin" />
+			</div>
+
+			<div>
+				<UButton icon="i-mdi-microsoft" @click="azureLogin" />
+			</div>
+
+			<div>
+				<UButton icon="i-mdi-twitter" @click="twitterLogin" />
+			</div>
+		</div>
+
+		<div
+			class="mt-3 text-sm flex items-center uppercase before:flex-1 before:border-t before:me-6 after:flex-1 after:border-t after:ms-6">
+			Or
+		</div>
+
+		<UFormGroup label="Email" class="mb-3">
+			<UInput type="text" v-model="email" />
+		</UFormGroup>
+
+		<UFormGroup label="Password" class="mb-3">
+			<UInput type="password" v-model="password" />
+		</UFormGroup>
+
+		<div class="flex justify-between mb-3">
+			<ULink to="/register">Create account</ULink>
+			<ULink to="/forgot_password">Forgot password?</ULink>
+		</div>
+
+		<UButton type="submit" :loading="loggingIn" label="Login" />
+	</UForm>
+</template>
