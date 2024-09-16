@@ -24,7 +24,7 @@ export default defineNuxtConfig({
 	},
 	security: {
 		headers: {
-			crossOriginEmbedderPolicy: process.env.NODE_ENV === 'development' ? 'unsafe-none' : 'credentialless'
+			crossOriginEmbedderPolicy: process.env.NUXT_HUB_ENV === 'development' ? 'unsafe-none' : 'credentialless'
 		}
 	}
 })
