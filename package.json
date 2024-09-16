@@ -13,6 +13,7 @@
     "@nuxt/image": "^1.8.0",
     "@nuxt/ui": "^2.18.4",
     "@nuxthub/core": "^0.7.17",
+    "@nuxtjs/robots": "^4.1.7",
     "@nuxtjs/supabase": "^1.4.0",
     "nuxt": "^3.13.2",
     "nuxt-security": "2.0.0-rc.9",

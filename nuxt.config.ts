@@ -8,7 +8,7 @@ export default defineNuxtConfig({
 		}
 	},
 
-	modules: ['@nuxtjs/supabase', 'nuxt-security', '@nuxt/ui', '@nuxthub/core', '@nuxt/image'],
+	modules: ['@nuxtjs/supabase', 'nuxt-security', '@nuxt/ui', '@nuxthub/core', '@nuxt/image', '@nuxtjs/robots'],
 
 	supabase: {
 		redirectOptions: {
