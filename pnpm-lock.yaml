@@ -15,8 +15,8 @@ importers:
         specifier: ^2.18.4
         version: 2.18.4(magicast@0.3.5)(rollup@4.21.3)(vite@5.4.5(@types/node@22.5.5)(terser@5.32.0))(vue@3.5.6)
       '@nuxthub/core':
-        specifier: ^0.7.16
-        version: 0.7.16(ioredis@5.4.1)(magicast@0.3.5)(rollup@4.21.3)(vite@5.4.5(@types/node@22.5.5)(terser@5.32.0))
+        specifier: ^0.7.17
+        version: 0.7.17(ioredis@5.4.1)(magicast@0.3.5)(rollup@4.21.3)(vite@5.4.5(@types/node@22.5.5)(terser@5.32.0))
       '@nuxtjs/supabase':
         specifier: ^1.4.0
         version: 1.4.0
@@ -27,7 +27,7 @@ importers:
         specifier: 2.0.0-rc.9
         version: 2.0.0-rc.9(magicast@0.3.5)(rollup@4.21.3)
       vue:
-        specifier: ^3.4.38
+        specifier: ^3.5.6
         version: 3.5.6
       vue-router:
         specifier: ^4.4.5
@@ -990,8 +990,8 @@ packages:
     peerDependencies:
       vue: ^3.3.4
 
-  '@nuxthub/core@0.7.16':
-    resolution: {integrity: sha512-e91GWlOxbxBWO5ki1uwsk8Z3yl5usbFDmRnZkfHN67FqHuq1K+LDYVtV7b907tgwwYQh+QdICmojUgcK8WumKg==}
+  '@nuxthub/core@0.7.17':
+    resolution: {integrity: sha512-emGF/Nfs4h7K+D9Xwjd+TikFcx4UIVCLplndFRmsDWTpBFZL9YXu6MlExHlckMa52uV1Az4MzsI8w0J0SdeIBA==}
 
   '@nuxtjs/color-mode@3.5.1':
     resolution: {integrity: sha512-GRHF3WUwX6fXIiRVlngNq1nVDwrVuP6dWX1DRmox3QolzX0eH1oJEcFr/lAm1nkT71JVGb8mszho9w+yHJbePw==}
@@ -1320,11 +1320,11 @@ packages:
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders || >=4.0.0-alpha.20'
 
-  '@tanstack/virtual-core@3.10.7':
-    resolution: {integrity: sha512-ND5dfsU0n9F4gROzwNNDJmg6y8n9pI8YWxtgbfJ5UcNn7Hx+MxEXtXcQ189tS7sh8pmCObgz2qSiyRKTZxT4dg==}
+  '@tanstack/virtual-core@3.10.8':
+    resolution: {integrity: sha512-PBu00mtt95jbKFi6Llk9aik8bnR3tR/oQP1o3TSi+iG//+Q2RTIzCEgKkHG8BB86kxMNW6O8wku+Lmi+QFR6jA==}
 
-  '@tanstack/vue-virtual@3.10.7':
-    resolution: {integrity: sha512-OSK1fkvz4GaBhF80KVmBsJZoMI9ncVaUU//pI8OqTdBnepw467zcuF2Y+Ia1VC0CPYfUEALyS8n4Ar0RI/7ASg==}
+  '@tanstack/vue-virtual@3.10.8':
+    resolution: {integrity: sha512-DB5QA8c/LfqOqIUCpSs3RdOTVroRRdqeHMqBkYrcashSZtOzIv8xbiqHgg7RYxDfkH5F3Y+e0MkuuyGNDVB0BQ==}
     peerDependencies:
       vue: ^2.7.0 || ^3.0.0
 
@@ -5048,7 +5048,7 @@ snapshots:
 
   '@headlessui/vue@1.7.23(vue@3.5.6)':
     dependencies:
-      '@tanstack/vue-virtual': 3.10.7(vue@3.5.6)
+      '@tanstack/vue-virtual': 3.10.8(vue@3.5.6)
       vue: 3.5.6
 
   '@iconify-json/heroicons@1.2.0':
@@ -5486,7 +5486,7 @@ snapshots:
       - vue-tsc
       - webpack-sources
 
-  '@nuxthub/core@0.7.16(ioredis@5.4.1)(magicast@0.3.5)(rollup@4.21.3)(vite@5.4.5(@types/node@22.5.5)(terser@5.32.0))':
+  '@nuxthub/core@0.7.17(ioredis@5.4.1)(magicast@0.3.5)(rollup@4.21.3)(vite@5.4.5(@types/node@22.5.5)(terser@5.32.0))':
     dependencies:
       '@cloudflare/workers-types': 4.20240909.0
       '@nuxt/devtools-kit': 1.4.2(magicast@0.3.5)(rollup@4.21.3)(vite@5.4.5(@types/node@22.5.5)(terser@5.32.0))
@@ -5847,11 +5847,11 @@ snapshots:
       postcss-selector-parser: 6.0.10
       tailwindcss: 3.4.11
 
-  '@tanstack/virtual-core@3.10.7': {}
+  '@tanstack/virtual-core@3.10.8': {}
 
-  '@tanstack/vue-virtual@3.10.7(vue@3.5.6)':
+  '@tanstack/vue-virtual@3.10.8(vue@3.5.6)':
     dependencies:
-      '@tanstack/virtual-core': 3.10.7
+      '@tanstack/virtual-core': 3.10.8
       vue: 3.5.6
 
   '@trysound/sax@0.2.0': {}
