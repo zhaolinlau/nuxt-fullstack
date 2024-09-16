@@ -27,69 +27,11 @@ const login = async () => {
 	loggingIn.value = false
 }
 
-const googleLogin = async () => {
+const socialLogin = async (provider) => {
 	loggingIn.value = true
 	const { error } = await client.auth.signInWithOAuth({
-		provider: 'google',
+		provider: provider,
 		options: {
-			redirectTo: `${runtimeConfig.public.siteURL}/confirm`
-		}
-	})
-	if (error) {
-		toast.add({
-			title: 'Error',
-			description: error.message,
-			color: 'red',
-			icon: 'i-mdi-alert'
-		})
-	}
-	loggingIn.value = false
-}
-
-const twitterLogin = async () => {
-	loggingIn.value = true
-	const { error } = await client.auth.signInWithOAuth({
-		provider: 'twitter',
-		options: {
-			redirectTo: `${runtimeConfig.public.siteURL}/confirm`
-		}
-	})
-	if (error) {
-		toast.add({
-			title: 'Error',
-			description: error.message,
-			color: 'red',
-			icon: 'i-mdi-alert'
-		})
-	}
-	loggingIn.value = false
-}
-
-const facebookLogin = async () => {
-	loggingIn.value = true
-	const { error } = await client.auth.signInWithOAuth({
-		provider: 'facebook',
-		options: {
-			redirectTo: `${runtimeConfig.public.siteURL}/confirm`
-		}
-	})
-	if (error) {
-		toast.add({
-			title: 'Error',
-			description: error.message,
-			color: 'red',
-			icon: 'i-mdi-alert'
-		})
-	}
-	loggingIn.value = false
-}
-
-const azureLogin = async () => {
-	loggingIn.value = true
-	const { error } = await client.auth.signInWithOAuth({
-		provider: 'azure',
-		options: {
-			scopes: 'email',
 			redirectTo: `${runtimeConfig.public.siteURL}/confirm`
 		}
 	})
@@ -127,19 +69,19 @@ const azureLogin = async () => {
 
 		<div class="flex justify-center gap-5 mb-3">
 			<div>
-				<UButton icon="i-mdi-google" @click="googleLogin" />
+				<UButton icon="i-mdi-google" @click="socialLogin('google')" />
 			</div>
 
 			<div>
-				<UButton icon="i-mdi-facebook" @click="facebookLogin" />
+				<UButton icon="i-mdi-facebook" @click="socialLogin('facebook')" />
 			</div>
 
 			<div>
-				<UButton icon="i-mdi-microsoft" @click="azureLogin" />
+				<UButton icon="i-mdi-microsoft" @click="socialLogin('azure')" />
 			</div>
 
 			<div>
-				<UButton icon="i-mdi-twitter" @click="twitterLogin" />
+				<UButton icon="i-mdi-twitter" @click="socialLogin('twitter')" />
 			</div>
 		</div>
 
