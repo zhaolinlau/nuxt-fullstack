@@ -13,7 +13,6 @@ watch(user, async () => {
 </script>
 
 <template>
-	{{ user.recovery_sent_at }}
 	<div class="grid grid-cols-1 lg:grid-cols-3">
 		<div class="col-start-2">
 			<ResetPasswordForm />
