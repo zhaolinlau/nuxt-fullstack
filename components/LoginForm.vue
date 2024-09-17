@@ -7,6 +7,7 @@ const state = reactive({
 const loggingIn = ref(false)
 const runtimeConfig = useRuntimeConfig()
 const toast = useToast()
+const visible = ref(false)
 
 const login = async () => {
 	loggingIn.value = true
@@ -56,14 +57,18 @@ const socialLogin = async (provider) => {
 		</UFormGroup>
 
 		<UFormGroup label="Password" class="mb-3">
-			<UInput type="password" icon="i-mdi-lock" v-model="state.password" :disabled="loggingIn" />
+			<div class="flex">
+				<UInput :type="visible ? 'text' : 'password'" class="flex-1" icon="i-mdi-lock" v-model="state.password"
+					:disabled="loggingIn" />
+				<UButton type="button" class="ml-3" :icon="`i-mdi-eye${visible ? '' : '-off'}`" @click="visible = !visible" />
+			</div>
 		</UFormGroup>
 
 		<div class="text-end mb-3">
 			<ULink to="/forgot_password" class="text-primary underline">Forgot password?</ULink>
 		</div>
 
-		<UButton type="submit" icon="i-mdi-login"class="mb-3" :loading="loggingIn" label="Sign in" block />
+		<UButton type="submit" icon="i-mdi-login" class="mb-3" :loading="loggingIn" label="Sign in" block />
 
 		<UDivider label="OR" class="mb-3" />
 
