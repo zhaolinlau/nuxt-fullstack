@@ -5,7 +5,7 @@ const state = reactive({
 	password: ''
 })
 const loggingIn = ref(false)
-const runtimeConfig = useRuntimeConfig()
+const config = useRuntimeConfig()
 const toast = useToast()
 const visible = ref(false)
 
@@ -33,7 +33,7 @@ const socialLogin = async (provider) => {
 	const { error } = await client.auth.signInWithOAuth({
 		provider: provider,
 		options: {
-			redirectTo: `${runtimeConfig.public.siteURL}/confirm`
+			redirectTo: `${config.public.siteURL}/confirm`
 		}
 	})
 	if (error) {
