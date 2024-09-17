@@ -20,9 +20,9 @@ export default defineNuxtConfig({
 
 	supabase: {
 		redirectOptions: {
-			login: "/login",
-			callback: "/confirm",
-			exclude: ["/register", "/forgot_password"]
+			login: '/login',
+			callback: '/confirm',
+			exclude: ['/register', '/forgot_password', '/reset_password']
 		},
 		clientOptions: {
 			auth: {
