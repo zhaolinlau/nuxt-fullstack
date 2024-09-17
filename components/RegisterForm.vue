@@ -47,7 +47,7 @@ const register = async () => {
 			title: 'Error',
 			icon: 'i-mdi-alert',
 			color: 'red',
-			description: 'Password do not match.'
+			description: 'Passwords do not match.'
 		})
 	}
 
