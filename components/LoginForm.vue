@@ -60,7 +60,7 @@ const socialLogin = async (provider) => {
 			<div class="flex">
 				<UInput :type="visible ? 'text' : 'password'" class="flex-1" icon="i-mdi-lock" v-model="state.password"
 					:disabled="loggingIn" />
-				<UButton type="button" class="ml-3" :icon="`i-mdi-eye${visible ? '' : '-off'}`" @click="visible = !visible" />
+				<UButton type="button" class="ml-2" :icon="`i-mdi-eye${visible ? '' : '-off'}`" @click="visible = !visible" />
 			</div>
 		</UFormGroup>
 
