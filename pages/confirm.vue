@@ -19,7 +19,6 @@ watch(user, async () => {
 </script>
 
 <template>
-	<p class="has-text-centered title">
-		Redirecting...
-	</p>
+	<p class="text-3xl text-center mb-3">Redirecting...</p>
+	<UProgress animation="carousel" />
 </template>
