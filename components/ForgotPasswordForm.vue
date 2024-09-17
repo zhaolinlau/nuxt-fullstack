@@ -11,7 +11,7 @@ const state = reactive({
 const sendResetLink = async () => {
 	sending.value = true
 	const { error } = await client.auth.resetPasswordForEmail(state.email, {
-		redirectTo: `${config.public.siteURL}/reset_password`
+		redirectTo: `${config.public.siteURL}/confirm`
 	})
 
 	if (error) {
