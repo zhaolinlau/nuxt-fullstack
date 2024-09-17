@@ -37,7 +37,7 @@ const sendResetLink = async () => {
 
 <template>
 	<UForm class="border border-primary rounded-lg p-3" :state="state" @submit="sendResetLink">
-		<p class="text-3xl font-semibold mb-3">Forgot Password</p>
+		<p class="text-3xl font-semibold mb-3">Forgot password</p>
 
 		<UFormGroup label="Email" class="mb-3">
 			<UInput icon="i-mdi-email" v-model="state.email" type="text" />
