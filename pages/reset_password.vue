@@ -14,7 +14,7 @@ watch(user, async () => {
 
 <template>
 	<div class="grid grid-cols-1 lg:grid-cols-3">
-		<div class="col-start-2">
+		<div class="lg:col-start-2">
 			<ResetPasswordForm />
 		</div>
 	</div>
